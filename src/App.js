@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Route, Routes} from "react-router-dom"
+import LogInPage from "./pages/LogInPage";
+import Profile from "./pages/Profile";
+import HomePage from "./pages/HomePage";
+import "./App.css"
+import Navbar from "./components/Navbar";
+import { Container } from "@mui/material";
+import LinuxQuiz from "./pages/LinuxQuiz";
+import BashQuiz from "./pages/BashQuiz";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Container maxWidth="lg">
+    <BrowserRouter>
+    <Navbar />
+    <div>
+    <Routes>
+      <Route exact path="/welcome" element={<HomePage />}/>  
+      <Route exact path="/linux" element={<LinuxQuiz />}/>  
+      <Route exact path="/php" element={<BashQuiz />}/>  
+      <Route exact path="/login" element={<LogInPage />}/>  
+      <Route exact path="/user" element={<Profile />}/>  
+     </Routes>  
     </div>
+    </BrowserRouter>
+    </Container>
   );
 }
 
