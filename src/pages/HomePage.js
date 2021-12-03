@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 
 const HomePage = () => {
+
+
     return (
             <>
             <Grid margin="50px 0" container justifyContent="center">
@@ -22,7 +24,7 @@ const HomePage = () => {
                     </Link>
                 </Grid>
                 <Grid container justifyContent="center" item lg="4" xs={12} sm={6}>
-                    <Link to="/php">
+                    <Link to="/bash">
                     <Button style={{ width: '150px', height: '150px' }} variant="contained" >BASH</Button>
                     </Link>
                 </Grid>

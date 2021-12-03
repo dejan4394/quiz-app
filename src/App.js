@@ -11,14 +11,14 @@ import BashQuiz from "./pages/BashQuiz";
 
 function App() {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md">
     <BrowserRouter>
     <Navbar />
     <div>
     <Routes>
       <Route exact path="/welcome" element={<HomePage />}/>  
       <Route exact path="/linux" element={<LinuxQuiz />}/>  
-      <Route exact path="/php" element={<BashQuiz />}/>  
+      <Route exact path="/bash" element={<BashQuiz />}/>  
       <Route exact path="/login" element={<LogInPage />}/>  
       <Route exact path="/user" element={<Profile />}/>  
      </Routes>  
