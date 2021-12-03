@@ -13,12 +13,13 @@ const BashQuiz = () => {
     
     const [ list, setList ] = useState([])
     const [ answers, setAnswers ] = useState ({})
+    // const [ submittedAnswer, setSubmittedAnswer ] = useState({})
 
-    const phpUrl = 'https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&category=bash&limit=5&tags=BASH'
+    const bashUrl = 'https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&category=bash&limit=5&tags=BASH'
     
     
     const getQuizBash = ()=>{
-        axios.get(phpUrl)
+        axios.get(bashUrl)
         .then(res=>{ 
         setList(res.data)
         setAnswers(res.data.answer)

@@ -22,7 +22,7 @@ const LinuxQuiz = () => {
         .then(res=>{ 
         setList(res.data)
         setAnswers(res.data.answer)
-        console.log(answers);
+        console.log(res.data);
         })
         .catch(err=>{
             console.log(err);  
