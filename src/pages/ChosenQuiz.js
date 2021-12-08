@@ -3,27 +3,41 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import "../App.css"
 import Button from '@mui/material/Button';
+import { useParams } from 'react-router';
 import "@fontsource/roboto";
 import { Grid, Typography } from '@mui/material';
 import Questions from '../components/Questions';
 
 
-const BashQuiz = () => {
+const ChosenQuiz = () => {
 
     
     const [ list, setList ] = useState([])
-    const [ answers, setAnswers ] = useState ({})
-    // const [ submittedAnswer, setSubmittedAnswer ] = useState({})
+    // const [ answers, setAnswers ] = useState ({})
+    const [ quizTag, setQuizTag ] = useState('')
+    const [ category, setCategory ] = useState('')
+    
 
-    const bashUrl = 'https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&category=bash&limit=5&tags=BASH'
+    const id = useParams()
     
-    
-    const getQuizBash = ()=>{
-        axios.get(bashUrl)
+    useState(()=>{
+        setQuizTag(id.id)
+        setCategory(id.category)
+    },[])
+
+    useEffect(() => {
+        getQuiz()
+    }, []);
+
+    const Url = 
+    `https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&category=${quizTag}`
+
+
+    const getQuiz = ()=>{
+        axios.get(Url)
         .then(res=>{ 
         setList(res.data)
-        setAnswers(res.data.answer)
-        console.log(answers);
+        console.log(res);
         })
         .catch(err=>{
             console.log(err);  
@@ -31,9 +45,7 @@ const BashQuiz = () => {
 
     }
 
-    useEffect(() => {
-        getQuizBash()
-    }, []);
+   
 
 
     const handleSubmit = ()=>{
@@ -44,7 +56,7 @@ const BashQuiz = () => {
         <> 
         <Grid container justifyContent="center" margin="10px 0">
         <Typography variant="h2">
-            BASH QUIZ
+            {category} QUIZ
         </Typography>
         </Grid>         
         <Questions list={list}/>
@@ -55,4 +67,4 @@ const BashQuiz = () => {
     )
 }
 
-export default BashQuiz
+export default ChosenQuiz

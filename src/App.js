@@ -5,8 +5,7 @@ import HomePage from "./pages/HomePage";
 import "./App.css"
 import Navbar from "./components/Navbar";
 import { Container } from "@mui/material";
-import LinuxQuiz from "./pages/LinuxQuiz";
-import BashQuiz from "./pages/BashQuiz";
+import ChosenQuiz from "./pages/ChosenQuiz";
 
 
 function App() {
@@ -17,8 +16,7 @@ function App() {
     <div>
     <Routes>
       <Route exact path="/welcome" element={<HomePage />}/>  
-      <Route exact path="/linux" element={<LinuxQuiz />}/>  
-      <Route exact path="/bash" element={<BashQuiz />}/>  
+      <Route exact path="/chosen-quiz/:id/:category" element={<ChosenQuiz />}/>   
       <Route exact path="/login" element={<LogInPage />}/>  
       <Route exact path="/user" element={<Profile />}/>  
      </Routes>  
