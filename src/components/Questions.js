@@ -1,7 +1,9 @@
 import React from 'react'
 import {useState, useEffect} from "react"
+import SubmitButton from '../components/SubmitButton';
 
-const Questions = ({list}) => {
+
+const Questions = ({list, parentCallback, handleSubmit}) => {
 
     let[ givenAnswer, setGivenAnswer ] = useState({
          questions: [],
@@ -60,6 +62,15 @@ const Questions = ({list}) => {
                     
                 </li>)
             })}
+            <div style={{
+                display : "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+                justifyItems: "center"
+            }}>
+            <input type="text" placeholder="Enter Full Name" name="fullName" value={givenAnswer.user} onChange={(e)=>setGivenAnswer({...givenAnswer,user: e.target.value})}/>
+            <SubmitButton onClick={parentCallback(givenAnswer), handleSubmit}/>
+            </div>
         </ol>
     )
 }
