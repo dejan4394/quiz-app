@@ -1,11 +1,11 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom"
-import LogInPage from "./pages/LogInPage";
 import Profile from "./pages/Profile";
-import HomePage from "./pages/HomePage";
+import QuizesPage from "./pages/QuizesPage";
 import "./App.css"
 import Navbar from "./components/Navbar";
 import { Container } from "@mui/material";
 import ChosenQuiz from "./pages/ChosenQuiz";
+import SignUp from "./pages/SignUp";
 
 
 function App() {
@@ -15,9 +15,10 @@ function App() {
     <Navbar />
     <div>
     <Routes>
-      <Route exact path="/welcome" element={<HomePage />}/>  
+      <Route exact path="/" element={<SignUp />}/>  
+      <Route exact path="/welcome" element={<QuizesPage />}/>  
       <Route exact path="/chosen-quiz/:id/:category" element={<ChosenQuiz />}/>   
-      <Route exact path="/login" element={<LogInPage />}/>  
+      <Route exact path="/login" element={<SignUp />}/>  
       <Route exact path="/user" element={<Profile />}/>  
      </Routes>  
     </div>

@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import { useState, useEffect, useCallback } from 'react'
 import "../App.css"
-import Button from '@mui/material/Button';
 import { useParams } from 'react-router';
 import "@fontsource/roboto";
 import { Grid, Typography } from '@mui/material';
@@ -24,7 +23,7 @@ const ChosenQuiz = () => {
     
     const [ list, setList ] = useState([])
     const [ questions, setQuestions ] = useState([])
-    const [ offeredAnswers, setOfferedAnswers ] = useState([])
+    const [ offeredAnswers, setOfferedAnswers ] = useState()
     // const [ answers, setAnswers ] = useState ({})
     const [ quizTag, setQuizTag ] = useState('')
     const [ category, setCategory ] = useState('')
@@ -35,7 +34,7 @@ const ChosenQuiz = () => {
     useState(()=>{
         setQuizTag(id.id)
         setCategory(id.category)
-    },[])
+    })
 
     useEffect(() => {
         getQuiz()
@@ -49,15 +48,21 @@ const ChosenQuiz = () => {
         axios.get(Url)
         .then(res=>{ 
         setList(res.data)
-        setQuestions(res.data.map(item=>{
-            return (item.question)
-        }))
-        setOfferedAnswers(res.data.map(item=>{
-            return (item.answers)
-        }))
+        
         console.log(res.data);
-        console.log(questions);
-        })
+        const transformed = res.data.map((item,idx)=>{
+            return{
+                id: item.id,
+                question: item.question,
+                oferred_answers: item.answers,
+                correct_answer: item.correct_answer
+
+            }
+            })
+            console.log(category);
+            console.log(transformed);
+            setQuestions(transformed)
+         })
         .catch(err=>{
             console.log(err);  
         })
@@ -70,9 +75,10 @@ const ChosenQuiz = () => {
             console.log("Sends POST Request to the server")
             console.log(data);
             const formData = new FormData();
+            formData.append('quiz_name', category)
             formData.append('user', data.user)
-            formData.append('answers', data.answers)
-            formData.append('questions', questions)
+            formData.append('answers', JSON.stringify(data.answers))
+            formData.append('questions', JSON.stringify(questions))
             formData.append('offeredAnswers', JSON.stringify(offeredAnswers))
             
     
@@ -80,14 +86,17 @@ const ChosenQuiz = () => {
                 method: "post",
                 url: "http://localhost:5000/results/",
                 data:formData,
-                headers: { "Content-Type": "multipart/form-data" } ,
+                headers: { "Content-Type": "multipart/form-data",
+                        'Access-Control-Allow-Origin': 'http://localhost:3000'}
               })
-                .then((res) => {
-                        console.log(res);
+                .then((response) => {
+                        console.log(response.data);
                     })
                 .catch(function (response) {
                   console.log(response);
                 });
+
+                
         }
     
 

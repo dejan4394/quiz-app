@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const HomePage = () => {
+const QuizesPage = () => {
 
 
     return (
@@ -57,4 +57,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default QuizesPage

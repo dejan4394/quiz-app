@@ -6,8 +6,9 @@ import SubmitButton from '../components/SubmitButton';
 const Questions = ({list, parentCallback, handleSubmit}) => {
 
     let[ givenAnswer, setGivenAnswer ] = useState({
-         questions: [],
-         answers: []
+        user: "",
+        questions: [],
+        answers: []
     })
 
 
@@ -68,8 +69,8 @@ const Questions = ({list, parentCallback, handleSubmit}) => {
                 marginTop: "20px",
                 justifyItems: "center"
             }}>
-            <input type="text" placeholder="Enter Full Name" name="fullName" value={givenAnswer.user} onChange={(e)=>setGivenAnswer({...givenAnswer,user: e.target.value})}/>
-            <SubmitButton onClick={parentCallback(givenAnswer), handleSubmit}/>
+            <input type="email" placeholder="Enter Full Name" name="fullName" value={givenAnswer.user} onChange={(e)=>setGivenAnswer({...givenAnswer,user: e.target.value})}/>
+            <SubmitButton onClick={parentCallback(givenAnswer), handleSubmit} children="Submit"/>
             </div>
         </ol>
     )

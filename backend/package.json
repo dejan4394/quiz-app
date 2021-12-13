@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-formidable": "^1.2.0",
     "express-router": "^0.0.1",
+    "mongodb": "^4.2.1",
     "mongoose": "^6.0.14"
   },
   "devDependencies": {

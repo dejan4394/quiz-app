@@ -7,9 +7,10 @@ const Navbar = () => {
     return (
         <div className="navbar">
             <ul>
-            <li><Link to="/welcome">Home</Link></li>
-            <li><Link to="/user">Profile</Link></li>
-            <li><Link to="/login">Log In</Link></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/welcome">Select Quiz</Link></li>
+            <li><Link to="/user">Log In</Link></li>
+            <li><Link to="/login">Sign Up</Link></li>
             </ul>
         </div>
     )

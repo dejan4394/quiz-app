@@ -2,12 +2,10 @@ import React from 'react'
 import Button from '@mui/material/Button';
 
 
-const SubmitButton = ({onClick}) => {
-    return (
-        <div className="submit-button">
-            <Button onClick = {onClick} variant="contained">Submit</Button>
-        </div>
-    )
+const SubmitButton = ({onClick, children}) => {
+    return <Button onClick = {onClick} variant="contained">{children}</Button>
+        
+    
 }
 
 export default SubmitButton

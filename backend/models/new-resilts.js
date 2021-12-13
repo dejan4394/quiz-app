@@ -5,14 +5,20 @@ const Schema = Mongoose.Schema
 
 const ResultsSchema = new Schema({
     user: String,
-    questions: {
-        type: Array
-    },
-    offeredAnswers: {
-        type: Array
-    },
-    answers: {
-        type: Array
+    password: String,
+    completed_quizes: {
+        type:Array,
+        default:{quiz_name: String,
+        questions: '',
+        offeredAnswers: {
+            type: Array
+        },
+        answers: {
+            type: Array
+        }}},
+    date:{
+        type: Date,
+        default: new Date()
     }
 })
 
