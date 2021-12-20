@@ -1,0 +1,165 @@
+import React, {useState} from 'react'
+import { Button, Grid, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles';
+import axios from 'axios'
+
+const useStyles = makeStyles({
+    link: {
+      color: 'white',
+      textDecoration: "none"
+    },
+    link_menu: {
+      textDecoration: "none"
+    },
+    heading:{
+        border:"2px solid #2196f3",
+        borderRadius: "5px",
+        backgroundColor: "#e3f2fd",
+        padding: "30px"
+    },
+    container_background:{
+        backgroundColor: "#cfd8dc"
+    },
+    button:{
+        marginBottom: "20px"
+    },
+    answers:{
+        width:"fill-available"
+    }
+  });
+
+
+export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
+
+    const classes = useStyles()
+
+    const [ user, setUser ] = useState('dejanmalinov@yahoo.com')
+    const [ generatedQuizz, setGeneratedQuizz ] = useState([])
+    const [ currentQuestion, setCurrentQuestion ] = useState(0)
+    const [ innitialScore, setInnitialScore ] = useState(0)
+    const [ showScore, setShowScore ] = useState(false)
+    const [ finalScore, setFinalScore ] = useState(0)
+    const [ data, setData ] = useState({
+        user: String,
+        quizz_name: String,
+        score: String
+    })
+    
+
+    const handleGenerate= async(event)=>{
+        
+        setShowScore(false)
+        setCurrentQuestion(0)
+        setFinalScore(0)
+        setInnitialScore(0)
+        event.preventDefault()
+        console.log(category+difficulty+ammount);
+
+        let apiUrl = `https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&limit=${ammount}`;
+           
+        
+        if (ammount.length>1) {
+        apiUrl = apiUrl.concat(`&limit=${ammount}`)
+        }
+        if (category.length) {
+        apiUrl = apiUrl.concat(`&category=${category}`)
+        }
+        if (difficulty.length) {
+        apiUrl = apiUrl.concat(`&difficulty=${difficulty}`)
+        }
+
+        console.log(apiUrl);
+
+        await fetch(apiUrl)
+        .then((res) => res.json())
+        .then((response) => {
+            setGeneratedQuizz(response)
+            console.log(generatedQuizz);
+        });
+
+        console.log(generatedQuizz);
+                
+    }
+
+    
+
+    const handleNextQuestion = (event)=>{
+        console.log(event);
+        const correctAnswer = event.target.name
+        const givenAnswer = event.target.id
+        const score = innitialScore + 1;
+        givenAnswer === correctAnswer && setInnitialScore(score);
+        console.log(`Your score is: ${score}/${generatedQuizz.length}`)
+
+        const nextQuestion = currentQuestion + 1;
+        if (nextQuestion < generatedQuizz.length) {
+            setCurrentQuestion(nextQuestion);
+        } else {
+            setShowScore(true)
+            setFinalScore(innitialScore);
+            
+            console.log(finalScore);
+        }
+    }
+
+    const submitAnswers = ()=>{
+        setData({
+            user: user,
+            password: '12345',
+            quizz_name: generatedQuizz[0].category,
+            score: `${finalScore} /${generatedQuizz.length}` 
+        })
+        console.log(data);
+        axios({
+            method: "post",
+            url: "http://localhost:5000/results/",
+            data:data,
+            headers: { "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': 'http://localhost:3000'}
+          })
+            .then((response) => {
+                    console.log(response.data);
+                   
+                })
+            .catch(function (response) {
+              console.log(response);
+            });
+    }
+
+    return (
+        <Grid container justifyContent="center">
+            <Grid item marginTop="20px">
+                <Button className={classes.button} variant='contained' onClick={handleGenerate}>generate quizz</Button>
+            </Grid>
+                {!showScore ? generatedQuizz.length > 0 &&
+                <Grid container justifyContent="center" display="flex" flexDirection="column">
+                    <Grid className={classes.heading} container justifyContent="center" >
+                        <Typography>{generatedQuizz[currentQuestion].question}</Typography>
+                    </Grid>
+                    
+                    <Grid container justifyContent="center" display="flex" flexDirection="column">
+                        {Object.keys(generatedQuizz[currentQuestion].answers).map(item =>{
+                            const answer = generatedQuizz[currentQuestion].answers[item];
+                            if( answer !== null){
+                                return(<Grid item marginTop="21px">
+                                            <Button 
+                                                className={classes.answers}
+                                                name={generatedQuizz[currentQuestion].correct_answer} 
+                                                id={item} onClick={handleNextQuestion} 
+                                                variant='contained'>
+                                            { answer }
+                                            </Button>
+                                        </Grid>)}}
+                        )}
+                    </Grid> 
+                </Grid>
+                 : <Grid container justifyContent="center" display="flex" flexDirection="column">
+                        <Grid container justifyContent="center">
+                            <Typography padding="100px">{`Your score is: ${finalScore}/${generatedQuizz.length}`}</Typography>
+                        </Grid>
+                        <Button variant='contained' on onClick={submitAnswers}>submit score</Button>
+                    </Grid>}
+                
+        </Grid>
+    )
+}
