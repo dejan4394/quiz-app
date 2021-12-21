@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -21,7 +21,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" to="/categories">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -32,7 +32,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp({setToken}) {
 
 const [ responseFromServer, setResponseFromServer ] = useState("")
 const [ user, setUser ] = useState({
@@ -57,16 +57,6 @@ const handleChange = (e)=>{
 
     console.log(user);
 
-    // const data = new FormData(event.currentTarget);
-
-    // console.log({
-    //   user: data.get('email'),
-    //   password: data.get('password'),
-    // });
-      
-    //   const formData = new FormData();
-    //   formData.append('user', data.get('email'))
-    //   formData.append('password', data.get('password'))
 
    await axios({
       method: "post",
@@ -78,6 +68,7 @@ const handleChange = (e)=>{
       .then((response) => {
               console.log(response);
               setResponseFromServer(response.data)
+              setToken(JSON.stringify(response.data))
           })
       .catch(function (response) {
         console.log(response);
@@ -153,12 +144,7 @@ const handleChange = (e)=>{
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+              
             </Grid>
             <Button
               // href="/welcome"
@@ -171,7 +157,7 @@ const handleChange = (e)=>{
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

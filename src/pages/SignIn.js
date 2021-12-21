@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -17,11 +17,12 @@ import { useState, useEffect } from "react"
 import WarningMsg from '../components/WarningMsg.js';
 
 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" to="https://mui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -34,7 +35,8 @@ const theme = createTheme();
 
 
 
-export default function SignIn() {
+export default function SignIn({setToken}) {
+
 
  
   const [ responseFromServer, setResponseFromServer ] = useState("")
@@ -69,14 +71,16 @@ export default function SignIn() {
         .then((response) => {
                 console.log(response);
                 setResponseFromServer(response.data)
-                localStorage.setItem("user", JSON.stringify(response.data))
+                setToken(JSON.stringify(response.data))
+                
+                // localStorage.setItem("user", JSON.stringify(response.data))
             })
         .catch(function (response) {
           console.log(response);
         });
 
-
-  };
+      };
+    
 
   return (
     <ThemeProvider theme={theme}>
@@ -135,12 +139,12 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                {/* <Link href="#" variant="body2">
                   Forgot password?
-                </Link>
+                </Link> */}
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
