@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import { useState, useEffect } from "react"
-import WarningMsg from '../../components/New/WarningMsg.js';
+import WarningMsg from '../components/WarningMsg.js';
 
 
 function Copyright(props) {

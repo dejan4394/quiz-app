@@ -14,8 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useState } from "react";
-import EmailPassword from "../../components/New/EmailPassword";
-import WarningMsg from '../../components/New/WarningMsg.js';
+import EmailPassword from "../components/EmailPassword.js";
+import WarningMsg from '../components/WarningMsg.js';
 
 function Copyright(props) {
   return (

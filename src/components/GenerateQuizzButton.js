@@ -42,6 +42,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     const [ data, setData ] = useState({
         user: String,
         quizz_name: String,
+        difficulty: String,
         score: String
     })
     
@@ -107,6 +108,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
             user: user,
             password: '12345',
             quizz_name: generatedQuizz[0].category,
+            difficulty: generatedQuizz[0].difficulty,
             score: `${finalScore} /${generatedQuizz.length}` 
         })
         console.log(data);

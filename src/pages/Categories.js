@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@mui/material';
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import QuizzGenerator from '../../components/New/QuizzGenerator';
+import QuizzGenerator from '../components//QuizzGenerator.js';
 
 const Categories = () => {
     

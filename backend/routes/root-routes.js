@@ -33,6 +33,7 @@ router.post("/", (req,res)=>{
                 console.log(result);
                 const newSubmitedResults = {
                         quiz_name: req.body.quizz_name,
+                        difficulty: req.body.difficulty,
                         score: req.body.score 
                 }
                 dataBase.collection("users").updateOne({

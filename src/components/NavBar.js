@@ -124,6 +124,22 @@ const ResponsiveAppBar = () => {
                 GO TO QUIZZES
               </Button>
             </Link>
+            <Link to="/login" className={classes.link}>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                LOG IN
+              </Button>
+            </Link>
+            <Link to="/signup" className={classes.link}>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                SIGN UP
+              </Button>
+            </Link>
               
            
           </Box>

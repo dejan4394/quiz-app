@@ -1,12 +1,12 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import { Container } from "@mui/material";
-import NavBar from "./components/New/NavBar.js"
-import Categories from "./pages/UIcomponents/Categories.js"
-import SignUp from "./pages/UIcomponents/SignUp.js"
-import SignIn from "./pages/UIcomponents/SignIn.js";
-import HomePage from "./pages/UIcomponents/HomePage";
-import { QuizPage } from "./pages/UIcomponents/QuizPage";
-import QuizzGenerator from "./components/New/QuizzGenerator";
+import NavBar from "./components/NavBar.js"
+import Categories from "./pages/Categories.js"
+import SignUp from "./pages/SignUp.js"
+import SignIn from "./pages/SignIn.js";
+import HomePage from "./pages/HomePage";
+import { QuizPage } from "./pages/QuizPage";
+
 
 
 
