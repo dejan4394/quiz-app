@@ -51,14 +51,7 @@ router.post("/signup", (req,res)=>{
     
 })
 
-// router.get("/sranje", (req,res)=>{
-//     if(req.isAuthenticated){
-//         console.log("lajno");
-//         // res.send("sranje")
-//     }else{
-//         console.log("gomno");
-//     }
-// })
+
 
 router.post("/login", (req, res, next) => {
     console.log("received user info");
@@ -72,7 +65,7 @@ router.post("/login", (req, res, next) => {
           if (err) throw err;
         //   res.send("Successfully Authenticated");
             console.log(req.user);
-            const token = req.user.user;
+            const token = JSON.stringify(req.user);
             res.send(token)
 
         });

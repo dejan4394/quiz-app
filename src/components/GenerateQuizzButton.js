@@ -88,7 +88,9 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         console.log(event);
         const correctAnswer = event.target.name
         const givenAnswer = event.target.id
+
         const score = innitialScore + 1;
+
         givenAnswer === correctAnswer && setInnitialScore(score);
         console.log(`Your score is: ${score}/${generatedQuizz.length}`)
 
@@ -96,21 +98,23 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         if (nextQuestion < generatedQuizz.length) {
             setCurrentQuestion(nextQuestion);
         } else {
-            setShowScore(true)
             setFinalScore(innitialScore);
-            
+            setShowScore(true)
+            setData({
+                user: user,
+                password: '12345',
+                quizz_name: generatedQuizz[0].category,
+                difficulty: generatedQuizz[0].difficulty,
+                score: `${score} /${generatedQuizz.length}` 
+            })
             console.log(finalScore);
+            
         }
     }
 
+            
     const submitAnswers = ()=>{
-        setData({
-            user: user,
-            password: '12345',
-            quizz_name: generatedQuizz[0].category,
-            difficulty: generatedQuizz[0].difficulty,
-            score: `${finalScore} /${generatedQuizz.length}` 
-        })
+        
         console.log(data);
         axios({
             method: "post",
@@ -120,7 +124,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
                     'Access-Control-Allow-Origin': 'http://localhost:3000'}
           })
             .then((response) => {
-                    console.log(response.data);
+                    console.log(response);
                    
                 })
             .catch(function (response) {
@@ -159,7 +163,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
                         <Grid container justifyContent="center">
                             <Typography padding="100px">{`Your score is: ${finalScore}/${generatedQuizz.length}`}</Typography>
                         </Grid>
-                        <Button variant='contained' on onClick={submitAnswers}>submit score</Button>
+                        <Button type='submit' variant='contained' on onClick={submitAnswers}>submit score</Button>
                     </Grid>}
                 
         </Grid>

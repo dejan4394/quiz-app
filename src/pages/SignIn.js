@@ -57,7 +57,7 @@ export default function SignIn({setToken}) {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     console.log(user);
 
   
@@ -70,10 +70,10 @@ export default function SignIn({setToken}) {
       })
         .then((response) => {
                 console.log(response);
-                setResponseFromServer(response.data)
+                // setResponseFromServer(response.data)
                 setToken(JSON.stringify(response.data))
+                // window.location.assign("http://localhost:3000/categories")
                 
-                // localStorage.setItem("user", JSON.stringify(response.data))
             })
         .catch(function (response) {
           console.log(response);
@@ -139,9 +139,6 @@ export default function SignIn({setToken}) {
             </Button>
             <Grid container>
               <Grid item xs>
-                {/* <Link href="#" variant="body2">
-                  Forgot password?
-                </Link> */}
               </Grid>
               <Grid item>
                 <Link to="/signup" variant="body2">

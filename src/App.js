@@ -13,17 +13,19 @@ function Application() {
 
 const { token, setToken } = UseToken()
 
+console.log(token);
+
   return (
     <Container maxWidth="md">
     
     <BrowserRouter>
-    <NavBar />
+    <NavBar token={token}/>
             <Routes>
             <Route exact path="/" element={<HomePage />}/>  
             <Route exact path="/categories" element={!token ? <SignUp setToken={setToken} /> : <Categories/>}/>  
             <Route exact path="/quiz-page/:id/:category" element={<QuizPage />}/>   
             <Route exact path="/login" element={<SignIn setToken={setToken} />}/>  
-            <Route exact path="/signup" element={<SignUp />}/>  
+            <Route exact path="/signup" element={<SignUp setToken={setToken}/>}/>  
             </Routes>  
     </BrowserRouter>
     </Container>

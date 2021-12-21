@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({token}) => {
 
   const classes = useStyles()
 
@@ -115,8 +115,12 @@ const ResponsiveAppBar = () => {
             </Link>
             </Typography>
           
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Link to="/categories" className={classes.link}>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            
+            </Box>
+            {!token &&
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:"flex-end" }}>
+              <Link to="/categories" className={classes.link}>
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
@@ -124,28 +128,26 @@ const ResponsiveAppBar = () => {
                 GO TO QUIZZES
               </Button>
             </Link>
-            <Link to="/login" className={classes.link}>
+            <Link to="/about" className={classes.link}>
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                LOG IN
+                ABOUT
               </Button>
             </Link>
-            <Link to="/signup" className={classes.link}>
+            <Link to="/contact" className={classes.link}>
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                SIGN UP
+                CONTACT
               </Button>
             </Link>
-              
-           
-          </Box>
-
+            </Box>}
+          { token &&
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+           <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="" />
               </IconButton>
@@ -173,6 +175,7 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
+          }
         </Toolbar>
       </Container>
     </AppBar>

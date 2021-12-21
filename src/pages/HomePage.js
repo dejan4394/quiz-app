@@ -1,7 +1,7 @@
 import { Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { makeStyles } from '@mui/styles'
-import { Link } from 'react-router-dom';
+import { Link } from '@mui/material';
 
 const useStyles = makeStyles({
     link: {
@@ -37,7 +37,7 @@ const HomePage = () => {
                         CHECK YOUR KNOWLEDGE
                     </Typography>
                 </Grid>
-                <Link className={classes.link} to="/categories">
+                <Link className={classes.link} href="http://localhost:3000/categories">
                     <Button className={classes.button} variant='contained'>START YOUR QUIZZ</Button>
                 </Link>
                 
