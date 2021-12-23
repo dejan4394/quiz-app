@@ -41,7 +41,10 @@ app.use(passport.session());
 app.use("/results", Results)
 app.use("/users", Users)
 
-
+// app.use(function(req,res,next){
+//   res.locals.currentUser = req.user;
+//   next();
+// })
 
 
 const port = process.env.PORT || 5000;

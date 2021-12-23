@@ -14,17 +14,16 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const useStyles = makeStyles({
+  menu_link: {
+    color: "black",
+    textDecoration: "none"
+  },
   link: {
     color: 'white',
     textDecoration: "none"
-  },
-  link_menu: {
-    textDecoration: "none"
-  },
+  }
 });
 
 const ResponsiveAppBar = ({token}) => {
@@ -41,7 +40,8 @@ const ResponsiveAppBar = ({token}) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (event) => {
+    event.preventDefault()
     setAnchorElNav(null);
   };
 
@@ -94,12 +94,9 @@ const ResponsiveAppBar = ({token}) => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <Link to="/categories" className={classes.link_menu}>
                 <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">GENERATE QUIZZ</Typography>
+                  <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>New Quizz</Link></Typography>
                 </MenuItem>
-              </Link>
-                
              
             </Menu>
           </Box>
@@ -125,7 +122,9 @@ const ResponsiveAppBar = ({token}) => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                GO TO QUIZZES
+               <Link to="/categories" className={classes.menu_link}>
+               New Quizz
+               </Link>
               </Button>
             </Link>
             <Link to="/about" className={classes.link}>
@@ -168,11 +167,15 @@ const ResponsiveAppBar = ({token}) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center"><Link to="/profile" className={classes.menu_link}>Profile</Link></Typography>
                 </MenuItem>
-              ))}
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>New Quizz</Link></Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center"><Link to="/signup" className={classes.menu_link}>Log Out</Link></Typography>
+                </MenuItem>
             </Menu>
           </Box>
           }

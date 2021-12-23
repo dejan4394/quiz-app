@@ -1,102 +1,68 @@
 import axios from 'axios'
-import React, {useState} from 'react'
-import { Button, Grid, Typography } from '@mui/material';
+import React, {useEffect, useState} from 'react'
+import UseToken from "../UseToken.js";
+import Typography from '@mui/material/Typography';
+
 import "@fontsource/roboto";
+import { Grid } from '@mui/material';
 
 
 
-const Profile = () => {
 
-    const [ userData, setUserData ] = useState("")
-    const [ received, setReceived ] = useState({
-        quiz_name: [],
-        testedUser:'',
-        quizData: []
-    })
+const Profile = ({token}) => {
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+const [ userData, setUserData ] = useState()
+const [ completedQuizes, setCompletedQuizes ] = useState([])
+const [ doesntExist, setDoesntExist ]= useState('')
 
 
-    const handleUserName = (e)=>{
-        e.preventDefault()
-        setUserData(e.target.value)
-        console.log(userData)
-    }
-
-    const GetCompleted = (e)=>{
-
-        e.preventDefault()
-
-        axios({
-            method: "GET",
-            url: "results/completed",
-            params: {user: userData},
-            headers: {  "Content-Type": "application/json",
-                        'Access-Control-Allow-Origin': 'http://localhost:3000/results'}
-          })
-         
-            .then((response) => {
+    const getData = () => {
+        console.log(token);
+     
+    axios({
+        method: "get",
+        url: "/results/completed",
+        headers: { "Authorization" : `${token}`,
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*'}
+      })
+        .then((response) => {
+          if(response.ok){
+            return JSON.stringify(response)
+          }else{
+                console.log(response);
                 console.log(response.data);
-                // const transformedUserData = {
+                setUserData(response.data)
+                setCompletedQuizes(response.data.completed_quizes)
 
-                // }
-                const transformedQuizData = {
-                    quiz_name: response.data.completed_quizes.map(item=>{
-                        return item.quiz_name
-                    }),
-                    testedUser : response.data.user,
-                    quizData : response.data.completed_quizes.map(item=>{
-                        return JSON.parse(item.questions)
-                    })
+                setDoesntExist(response.data.message)
+              
+        }})
+        .catch((err) => {
+          console.log(err.message);
+        });
 
-                }
-                // const object = JSON.parse(transformedData.quizData)
-                setReceived(transformedQuizData)
-                console.log(received); 
-                })
-            .catch((err) => {
-                    console.log(err)
-                });
-        }
+      };
 
+
+      
+    
 
     return (
-        <Grid container bgcolor="primary.main" direction="column"  margin="10px 0" justifyContent="center">
-            <Grid container direction="row" justifyContent="center">
-                <Grid item>
-                <Typography variant='h1'>
-                <form onSubmit={GetCompleted} style={{display: "flex", justifyContent:"space-between"}}>
-                    <input type="text" placeholder='Enter User Name' name="userName" onChange={handleUserName} value={userData}/>
-                    <Button type="submit" variant='contained'>Submit</Button>
-                </form>
-                </Typography>
-                </Grid>
-            </Grid>
-            <Grid container justifyContent="center">
-                <Grid item margin="20px 0">
-                    <Typography>
-                    {`Tested Person :   ${received.testedUser}`}
-                    </Typography>
-                </Grid>
-            </Grid>
-            {/* <Grid container justifyContent="center">
-                <Grid item>
-                {received.quizData[0].map(item=>{
-                    return( 
-                    <p>
-                        {item.question}
-                    </p>)
-                })}
-                </Grid>
-            </Grid> */}
-            <Grid container spacing={8} justifyContent="space-between" alignItems="center">
-               
-                {received.quiz_name.map(item=>{
-                return <Grid item xs={8} md={6}>
-                            <MultiActionAreaCard quizName={item} />
-                            {/* <div>{received.quizData}</div> */}
-                        </Grid>
+        <Grid>
+        <Typography>{doesntExist}</Typography>
+         {userData &&
+           <Typography>{userData.user}</Typography>}
+            {completedQuizes && completedQuizes.map(item=>{
+                return <Typography>{item.quiz_name}</Typography>
             })}
-            </Grid>
         </Grid>
+            
+       
     )
 }
 

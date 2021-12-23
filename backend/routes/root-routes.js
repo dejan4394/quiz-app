@@ -2,6 +2,7 @@ import express from "express"
 import User from "../models/user.js"
 // import User from "../models/signup.js";
 import { MongoClient } from 'mongodb';
+import jsonwebtoken  from 'jsonwebtoken'
 
 
 
@@ -11,8 +12,21 @@ const url = "mongodb+srv://dejan4394:ilinamalinova2018@cluster0.5bfpt.mongodb.ne
 
 router.post("/", (req,res)=>{
 
-    const user = req.body.user
-    console.log(user);
+    let token  = req.headers.authorization
+    console.log(token);
+    jsonwebtoken.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+        if (err) {
+            return res.status(500).send({
+                message: err.message
+            })
+        }
+       
+        token = decoded.user
+        // req.userId = decoded.id
+        // console.log(id);
+})
+    console.log(token);
+
     console.log('Request sent to the Server');
     MongoClient.connect(url, async(err, db) => {
             if (err)
@@ -20,29 +34,32 @@ router.post("/", (req,res)=>{
             console.log("CONNECTED");
             let dataBase = db.db("QuizAnswers");
             dataBase.collection("users").findOne({
-                user
+                user: token
             },
             (err, result) => {
                 if (err) throw err;
-                if(result === null)
-                {
-                   console.log("user doesnt exists");
-                   res.send("Invalid e-mail!!!")
-            }
-            else {
-                console.log(result);
-                const newSubmitedResults = {
-                        quiz_name: req.body.quizz_name,
-                        difficulty: req.body.difficulty,
-                        score: req.body.score 
-                }
+                if(result === null){
+                    return res.status(500).json({
+                       
+                        message: 'User doesnt found!!!!!!!!!!'})
+                   
+                    }
+                else {
+                    console.log(result);
+                    const newSubmitedResults = {
+                            quiz_name: req.body.quizz_name,
+                            difficulty: req.body.difficulty,
+                            score: req.body.score 
+                    }
                 dataBase.collection("users").updateOne({
-                    user
+                    user: token
                 },{ $push: { completed_quizes: newSubmitedResults} })
 
-                console.log("user already exists");
-            
-                res.status(200).send("Successfully submited answers!!!")
+                console.log("Successfully submited answers");
+                    res.status(200).json({
+                    success: true,
+                    message: "Successfully submited answers!!!"})
+               
             }
             });
         });
@@ -55,23 +72,42 @@ router.post("/", (req,res)=>{
 
 
 router.get("/completed", (req,res)=>{
-    const { user } = req.query
-    console.log(user);
+    let token  = req.headers.authorization
+    console.log(token);
+    jsonwebtoken.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+        if (err) {
+            return res.status(500).send({
+                message: err.message
+            })
+        }
+       
+        token = decoded.user
+        // req.userId = decoded.id
+        // console.log(id);
+})
+    console.log(token);
     console.log('Request sent to the Server');
     MongoClient.connect(url, async(err, db) => {
             if (err)
                 throw err;
             let dataBase = db.db("QuizAnswers");
             dataBase.collection("users").findOne({
-                user
+               user:token
             },
             (err, result) => {
                 if (err) throw err;
-                const ans = result
-                console.log(ans);
-                // console.log(ans.json());
-                res.status(200).send(ans)
-                db.close();
+                if(result){
+                    console.log("Successfull Fetched Data from DB!!!!!!!!!!!!!!!!!!!!!!");
+                    const ans = result
+                    console.log(ans);
+                    // console.log(ans.json());
+                    res.status(200).send(ans)
+                    db.close();
+                }else{
+                    console.log("UserDoesnt exist!!!!!!");
+                    
+                }
+               
             });
         });
         

@@ -3,14 +3,17 @@ import User from "../models/user.js"
 import { MongoClient } from 'mongodb';
 import passport from "../passport/index.js"
 import bcrypt from "bcrypt"
+import jsonwebtoken  from 'jsonwebtoken'
 
+const EXPIRES_IN_MINUTES = '1440m' // expires in 24 hours
 
-
-
+import config from "../config/index.js"
 
 const router = express.Router()
 
 const url = "mongodb+srv://dejan4394:ilinamalinova2018@cluster0.5bfpt.mongodb.net/QuizAnswers?retryWrites=true&w=majority"
+
+
 
 router.post("/signup", (req,res)=>{
 
@@ -30,20 +33,31 @@ router.post("/signup", (req,res)=>{
                 if(result === null)
                     {
                     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
+                   
+                    const payload = { user: user }
+                    console.log(payload);
+        
+                    const token = jsonwebtoken.sign(payload, config.JWTSecret)
                         const newUserData = new User({
                         user: user,
                         password: hashedPassword,
                     })
-                    console.log(newUserData);
                     newUserData.save()
-                        res.send("Successfully Signed!!!")
+                    console.log("Sign Up Successfull!!!!!!");
                     
+                        // res.send("Successfully Signed!!!")
+                        return res.status(200).json({
+                            success: true,
+                            user,
+                            token,
+                            message: 'Sign Up Successfull!!!'})
                     db.close()
                 }
                 else {
-                    console.log("user already exists");
-                    res.status(200).send("Email Already registered!!!")      
+                    console.log("user already exists!!!!!!!!!!!!!!!!!");
+                    return res.status(200).json({
+                        success: false,
+                        message: 'User already exist!!!!!!!!!!!!!!!!'})    
             }
             });
         });
@@ -51,22 +65,36 @@ router.post("/signup", (req,res)=>{
     
 })
 
+//====LOGIN ROUTE===============================================================
 
 
 router.post("/login", (req, res, next) => {
+    console.log(req.body);
     console.log("received user info");
     
-    passport.authenticate("local", (err, user, info) => {
+    passport.authenticate("local-signin", (err, user, info) => {
         
       if (err) throw err;
       if (!user) res.send("No User Exists");
       else {
         req.logIn(user, (err) => {
           if (err) throw err;
-        //   res.send("Successfully Authenticated");
-            console.log(req.user);
-            const token = JSON.stringify(req.user);
-            res.send(token)
+                const payload = { user: user.user }
+                console.log(payload);
+                console.log("passed strategy");
+                const token = jsonwebtoken.sign(payload, config.JWTSecret, {
+                    expiresIn: EXPIRES_IN_MINUTES,
+                })
+
+                user.password = undefined
+                console.log("User authenticated!");
+                return res.status(200).json({
+                    success: true,
+                    user,
+                    token,
+                    message: 'User authenticated!',
+                })
+      
 
         });
       }

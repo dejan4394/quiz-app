@@ -63,9 +63,11 @@ const handleChange = (e)=>{
               'Access-Control-Allow-Origin': '*'}
     })
       .then((response) => {
-              console.log(response.data);
-              setResponseFromServer(response.data)
-              setToken(JSON.stringify(response.data))
+              if(response.success==="true"){
+                return (
+                  setToken(JSON.stringify(response.data.token)))
+              }else{
+              setResponseFromServer(response.data.message)}
           })
       .catch(function (response) {
         console.log(response);

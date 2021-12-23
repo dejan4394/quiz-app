@@ -29,18 +29,18 @@ const useStyles = makeStyles({
   });
 
 
-export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
+export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
+
+    console.log(token);
 
     const classes = useStyles()
 
-    const [ user, setUser ] = useState('dejanmalinov@yahoo.com')
     const [ generatedQuizz, setGeneratedQuizz ] = useState([])
     const [ currentQuestion, setCurrentQuestion ] = useState(0)
     const [ innitialScore, setInnitialScore ] = useState(0)
     const [ showScore, setShowScore ] = useState(false)
     const [ finalScore, setFinalScore ] = useState(0)
     const [ data, setData ] = useState({
-        user: String,
         quizz_name: String,
         difficulty: String,
         score: String
@@ -101,8 +101,6 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
             setFinalScore(innitialScore);
             setShowScore(true)
             setData({
-                user: user,
-                password: '12345',
                 quizz_name: generatedQuizz[0].category,
                 difficulty: generatedQuizz[0].difficulty,
                 score: `${score} /${generatedQuizz.length}` 
@@ -118,10 +116,11 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         console.log(data);
         axios({
             method: "post",
-            url: "http://localhost:5000/results/",
+            url: "http://localhost:5000/results",
             data:data,
-            headers: { "Content-Type": "application/json",
-                    'Access-Control-Allow-Origin': 'http://localhost:3000'}
+            headers: {  "Authorization" : `${token}`,
+                        "Content-Type": "application/json",
+                        'Access-Control-Allow-Origin': 'http://localhost:3000'}
           })
             .then((response) => {
                     console.log(response);

@@ -4,7 +4,7 @@ import SelectComponent from "./SelectComponent.js"
 import { GenerateQuizzButton } from './GenerateQuizzButton.js'
 import axios from 'axios'
 
-const QuizzGenerator = ({quizzData}) => {
+const QuizzGenerator = ({quizzData, token}) => {
 
     //Get Categories
     const filterredCategory = ()=>{
@@ -67,7 +67,7 @@ const QuizzGenerator = ({quizzData}) => {
             <Grid item marginTop="20px">
                 <SelectComponent label="Ammount of questions" queryArray={[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20]} value={ammount} onChange={handleAmmount}/>
             </Grid> 
-            {quizzData && <GenerateQuizzButton category={category} difficulty={difficulty} ammount={ammount}/>}
+            {quizzData && <GenerateQuizzButton category={category} difficulty={difficulty} ammount={ammount} token={token}/>}
         </Grid>
         
     )

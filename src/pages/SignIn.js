@@ -13,8 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import WarningMsg from '../components/WarningMsg.js';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -35,9 +36,9 @@ const theme = createTheme();
 
 
 
-export default function SignIn({setToken}) {
+export default function SignIn({setToken, setData}) {
 
-
+  const navigate = useNavigate();
  
   const [ responseFromServer, setResponseFromServer ] = useState("")
   const [ user, setUser ] = useState({
@@ -69,14 +70,17 @@ export default function SignIn({setToken}) {
                    'Access-Control-Allow-Origin': '*'}
       })
         .then((response) => {
-                console.log(response);
-                // setResponseFromServer(response.data)
-                setToken(JSON.stringify(response.data))
-                // window.location.assign("http://localhost:3000/categories")
-                
-            })
-        .catch(function (response) {
-          console.log(response);
+          if(response.ok){
+            return JSON.stringify(response)
+          }else{
+                console.log(response.data);
+                setResponseFromServer(response.data.message)
+                setToken(JSON.stringify(response.data.token))
+                // setData(response.data.completed_quizes)
+                // navigate("/categories")
+        }})
+        .catch((err) => {
+          console.log(err.message);
         });
 
       };

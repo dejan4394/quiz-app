@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import QuizzGenerator from '../components//QuizzGenerator.js';
 
-const Categories = () => {
-    
+const Categories = ({token}) => {
+    console.log(token);
     const [ quizzData, setQuizData ] = useState([])
     
     useEffect(() => {
@@ -31,7 +31,7 @@ const getQuizzesData = async()=>{
             }
 
     return (<Grid container display="flex" flexDirection="column">
-                <QuizzGenerator quizzData={quizzData}/>
+                <QuizzGenerator quizzData={quizzData} token={token}/>
             </Grid>     
     )
 }
