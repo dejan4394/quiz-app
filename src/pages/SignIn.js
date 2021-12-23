@@ -77,7 +77,10 @@ export default function SignIn({setToken, setData}) {
                 setResponseFromServer(response.data.message)
                 setToken(JSON.stringify(response.data.token))
                 // setData(response.data.completed_quizes)
-                // navigate("/categories")
+                setTimeout(() => {
+                  navigate("/profile")
+                }, 1000);
+                
         }})
         .catch((err) => {
           console.log(err.message);

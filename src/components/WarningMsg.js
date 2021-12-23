@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 const WarningMsg = ({message}) => {
     return (
         <Typography variant='h6' color="red">
-            <p>{message}</p>
+            {message}
         </Typography>
     )
 }

@@ -2,8 +2,9 @@ import express from "express"
 import User from "../models/user.js"
 // import User from "../models/signup.js";
 import { MongoClient } from 'mongodb';
-import jsonwebtoken  from 'jsonwebtoken'
-
+// import jsonwebtoken  from 'jsonwebtoken'
+import jwt_decode from "jwt-decode"
+import { decode } from "jsonwebtoken";
 
 
 const router = express.Router()
@@ -14,19 +15,11 @@ router.post("/", (req,res)=>{
 
     let token  = req.headers.authorization
     console.log(token);
-    jsonwebtoken.verify(token, process.env.JWT_SECRET, function(err, decoded) {
-        if (err) {
-            return res.status(500).send({
-                message: err.message
-            })
-        }
-       
-        token = decoded.user
-        // req.userId = decoded.id
-        // console.log(id);
-})
-    console.log(token);
+    var decoded = jwt_decode(token);
 
+    const decodedToken = decoded.user
+    console.log(decodedToken);
+    console.log(req.body);
     console.log('Request sent to the Server');
     MongoClient.connect(url, async(err, db) => {
             if (err)
@@ -34,7 +27,7 @@ router.post("/", (req,res)=>{
             console.log("CONNECTED");
             let dataBase = db.db("QuizAnswers");
             dataBase.collection("users").findOne({
-                user: token
+                user: decodedToken
             },
             (err, result) => {
                 if (err) throw err;
@@ -52,7 +45,7 @@ router.post("/", (req,res)=>{
                             score: req.body.score 
                     }
                 dataBase.collection("users").updateOne({
-                    user: token
+                    user: decodedToken
                 },{ $push: { completed_quizes: newSubmitedResults} })
 
                 console.log("Successfully submited answers");
@@ -69,34 +62,37 @@ router.post("/", (req,res)=>{
 
 
 
-
+//===GET COMPLETED QUIZES AT THE PROFILE PAGE============================
 
 router.get("/completed", (req,res)=>{
+
     let token  = req.headers.authorization
     console.log(token);
-    jsonwebtoken.verify(token, process.env.JWT_SECRET, function(err, decoded) {
-        if (err) {
-            return res.status(500).send({
-                message: err.message
-            })
-        }
+    var decoded = jwt_decode(token);
+//     const jsonToken = jsonwebtoken.verify(token, process.env.JWT_SECRET, (err, decoded)=> {
+//         if (err) {
+//             console.log(err);
+//             // return res.status(500).send({
+//             //     message: err.message
+//             // })
+//         }
        
-        token = decoded.user
-        // req.userId = decoded.id
-        // console.log(id);
-})
-    console.log(token);
-    console.log('Request sent to the Server');
+//         return token = decoded.user
+      
+// })
+    const decodedToken = decoded.user
+    console.log(decodedToken);
+    console.log('GET Request sent to the Server');
     MongoClient.connect(url, async(err, db) => {
             if (err)
                 throw err;
             let dataBase = db.db("QuizAnswers");
             dataBase.collection("users").findOne({
-               user:token
+               user:decodedToken
             },
             (err, result) => {
                 if (err) throw err;
-                if(result.completed_quizes){
+                if(result){
                     console.log("Successfull Fetched Data from DB!!!!!!!!!!!!!!!!!!!!!!");
             
                     res.status(200).json({
@@ -105,7 +101,6 @@ router.get("/completed", (req,res)=>{
                         message: "Your completed quizes!!!"})
                     db.close();
                 }else{
-                    console.log("User doesnt have completed quizes!!!!!!");
                     res.status(200).json({
                         success: false,
                         message: "You dont have any completed quizes!!!"})

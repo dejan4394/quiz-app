@@ -69,8 +69,8 @@ router.post("/signup", (req,res)=>{
 
 
 router.post("/login", (req, res, next) => {
-    console.log(req.body);
-    console.log("received user info");
+    
+    console.log("Received  User Credentials");
     
     passport.authenticate("local-signin", (err, user, info) => {
         

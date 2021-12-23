@@ -62,7 +62,7 @@ export default function CardComponent({category, score}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">DELETE RESULT</Button>
       </CardActions>
     </Card>
   );

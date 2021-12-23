@@ -49,6 +49,10 @@ const ResponsiveAppBar = ({token}) => {
     setAnchorElUser(null);
   };
 
+  const handleLogOut = ()=> {
+    sessionStorage.removeItem("token")
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -122,7 +126,7 @@ const ResponsiveAppBar = ({token}) => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-               <Link to="/categories" className={classes.menu_link}>
+               <Link to="/categories" className={classes.link}>
                New Quizz
                </Link>
               </Button>
@@ -174,7 +178,7 @@ const ResponsiveAppBar = ({token}) => {
                   <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>New Quizz</Link></Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center"><Link to="/signup" className={classes.menu_link}>Log Out</Link></Typography>
+                  <Typography onClick={handleLogOut} textAlign="center"><Link to="/signup" className={classes.menu_link}>Log Out</Link></Typography>
                 </MenuItem>
             </Menu>
           </Box>

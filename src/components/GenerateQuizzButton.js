@@ -124,6 +124,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
           })
             .then((response) => {
                     console.log(response);
+                    console.log(response.data.message);
                    
                 })
             .catch(function (response) {
