@@ -1,11 +1,10 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import UseToken from "../UseToken.js";
 import Typography from '@mui/material/Typography';
-
 import "@fontsource/roboto";
 import { Grid } from '@mui/material';
-
+import WarningMsg from '../components/WarningMsg.js';
+import CardComponent from "../components/CardComponent.js"
 
 
 
@@ -18,6 +17,7 @@ const Profile = ({token}) => {
 const [ userData, setUserData ] = useState()
 const [ completedQuizes, setCompletedQuizes ] = useState([])
 const [ doesntExist, setDoesntExist ]= useState('')
+const [ responseFromServer, setResponseFromServer ] = useState("")
 
 
     const getData = () => {
@@ -31,17 +31,14 @@ const [ doesntExist, setDoesntExist ]= useState('')
                     'Access-Control-Allow-Origin': '*'}
       })
         .then((response) => {
-          if(response.ok){
-            return JSON.stringify(response)
-          }else{
+          
                 console.log(response);
                 console.log(response.data);
-                setUserData(response.data)
-                setCompletedQuizes(response.data.completed_quizes)
-
-                setDoesntExist(response.data.message)
+                setUserData(response.data.result)
+                setCompletedQuizes(response.data.result.completed_quizes)
+                setResponseFromServer(response.data.message)
               
-        }})
+        })
         .catch((err) => {
           console.log(err.message);
         });
@@ -54,11 +51,11 @@ const [ doesntExist, setDoesntExist ]= useState('')
 
     return (
         <Grid>
-        <Typography>{doesntExist}</Typography>
+        <WarningMsg message={responseFromServer}/>
          {userData &&
            <Typography>{userData.user}</Typography>}
             {completedQuizes && completedQuizes.map(item=>{
-                return <Typography>{item.quiz_name}</Typography>
+                return <CardComponent category={item.quiz_name} score={item.score}/>
             })}
         </Grid>
             

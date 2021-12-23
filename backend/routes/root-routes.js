@@ -96,16 +96,19 @@ router.get("/completed", (req,res)=>{
             },
             (err, result) => {
                 if (err) throw err;
-                if(result){
+                if(result.completed_quizes){
                     console.log("Successfull Fetched Data from DB!!!!!!!!!!!!!!!!!!!!!!");
-                    const ans = result
-                    console.log(ans);
-                    // console.log(ans.json());
-                    res.status(200).send(ans)
+            
+                    res.status(200).json({
+                        success: true,
+                        result,
+                        message: "Your completed quizes!!!"})
                     db.close();
                 }else{
-                    console.log("UserDoesnt exist!!!!!!");
-                    
+                    console.log("User doesnt have completed quizes!!!!!!");
+                    res.status(200).json({
+                        success: false,
+                        message: "You dont have any completed quizes!!!"})
                 }
                
             });
