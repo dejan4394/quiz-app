@@ -34,7 +34,7 @@ app.use(Cors())
 
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 
 //Root Routes
