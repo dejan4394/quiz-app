@@ -33,6 +33,8 @@ export default function SignUp({setToken}) {
 
 const [ responseFromServer, setResponseFromServer ] = useState("")
 const [ user, setUser ] = useState({
+  firstName: "",
+  lastName: "",
   username:"",
   password: ""
 })
@@ -99,6 +101,7 @@ const handleChange = (e)=>{
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  onChange={handleChange}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -110,6 +113,7 @@ const handleChange = (e)=>{
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  onChange={handleChange}
                   required
                   fullWidth
                   id="lastName"

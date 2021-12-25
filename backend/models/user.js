@@ -4,6 +4,8 @@ const Mongoose = pkg
 const Schema = Mongoose.Schema
 
 const userSchema = new Schema({
+    firstName: String,
+    lastName: String,
     user: String,
     password: String,
     

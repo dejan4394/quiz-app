@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import Results from "./routes/root-routes.js"
+import Results from "./routes/quizes-routes.js"
 import Users from "./routes/users-route.js"
 import Cors from "cors";
 import session from "express-session";
@@ -22,8 +22,11 @@ app.use(
       })
     );
 
-//Connection to the Data Base
-const url = "mongodb+srv://dejan4394:ilinamalinova2018@cluster0.5bfpt.mongodb.net/QuizAnswers?retryWrites=true&w=majority"
+    
+
+//CONNECTION TO THE DATA BASE====
+
+const url = process.env.MONGODB_URI
 mongoose.connect(url, {useNewUrlParser: true})
 .then(()=>console.log("Connected to the Data Base"))
 .catch( err=> console.log(err))
@@ -32,19 +35,16 @@ app.use(Cors())
 
 
 
+//==INITIALIZE PASSPORT========
 
 app.use(passport.initialize());
 // app.use(passport.session());
 
 
-//Root Routes
+//==ROOT ROUTES================
+
 app.use("/results", Results)
 app.use("/users", Users)
-
-// app.use(function(req,res,next){
-//   res.locals.currentUser = req.user;
-//   next();
-// })
 
 
 const port = process.env.PORT || 5000;

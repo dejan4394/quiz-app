@@ -27,26 +27,17 @@ const useStyles = makeStyles({
         marginBottom: "20px"
     },
     card: {
-        background: "grey",
+        border: " 2px solid grey",
         margin: "20px" 
     }
   });
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
 
 export default function CardComponent({category, score}) {
 
     const classes = useStyles()
 
   return (
-    <Card sx={{ minWidth: 275 }} className={classes.card} >
+    <Card sx={{ minWidth: 220 }} className={classes.card} >
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Category

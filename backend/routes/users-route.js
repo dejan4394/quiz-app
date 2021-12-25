@@ -4,23 +4,20 @@ import { MongoClient } from 'mongodb';
 import passport from "../passport/index.js"
 import bcrypt from "bcrypt"
 import jsonwebtoken  from 'jsonwebtoken'
+import config from "../config/index.js"
 
 const EXPIRES_IN_MINUTES = '1440m' // expires in 24 hours
 
-import config from "../config/index.js"
-
 const router = express.Router()
 
-const url = "mongodb+srv://dejan4394:ilinamalinova2018@cluster0.5bfpt.mongodb.net/QuizAnswers?retryWrites=true&w=majority"
 
-
+//==SIGN-UP ROUTE==========================================================
 
 router.post("/signup", (req,res)=>{
-
     const user = req.body.username
     console.log(user);
     console.log('Request sent to the Server');
-    MongoClient.connect(url, async(err, db) => {
+    MongoClient.connect(process.env.MONGODB_URI, async(err, db) => {
             if (err)
                 throw err;
             console.log("CONNECTED");
@@ -39,6 +36,8 @@ router.post("/signup", (req,res)=>{
         
                     const token = jsonwebtoken.sign(payload, config.JWTSecret)
                         const newUserData = new User({
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
                         user: user,
                         password: hashedPassword,
                     })
@@ -61,9 +60,10 @@ router.post("/signup", (req,res)=>{
             }
             });
         });
-    
-    
 })
+//==============================================================================
+
+
 
 //====LOGIN ROUTE===============================================================
 
@@ -100,7 +100,7 @@ router.post("/login", (req, res, next) => {
       }
     })(req, res, next);
   });
-
+//=================================================================================
 
   
 

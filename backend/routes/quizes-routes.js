@@ -9,7 +9,7 @@ import { decode } from "jsonwebtoken";
 
 const router = express.Router()
 
-const url = "mongodb+srv://dejan4394:ilinamalinova2018@cluster0.5bfpt.mongodb.net/QuizAnswers?retryWrites=true&w=majority"
+//===SAVE NEW QUIZZ ROUTE======================================================
 
 router.post("/", (req,res)=>{
 
@@ -21,7 +21,7 @@ router.post("/", (req,res)=>{
     console.log(decodedToken);
     console.log(req.body);
     console.log('Request sent to the Server');
-    MongoClient.connect(url, async(err, db) => {
+    MongoClient.connect(process.env.MONGODB_URI, async(err, db) => {
             if (err)
                 throw err;
             console.log("CONNECTED");
@@ -58,7 +58,7 @@ router.post("/", (req,res)=>{
         });
    
 })
-
+//=======================================================================
 
 
 
@@ -68,22 +68,15 @@ router.get("/completed", (req,res)=>{
 
     let token  = req.headers.authorization
     console.log(token);
+
+    //--Decode the JWT---------------------------
     var decoded = jwt_decode(token);
-//     const jsonToken = jsonwebtoken.verify(token, process.env.JWT_SECRET, (err, decoded)=> {
-//         if (err) {
-//             console.log(err);
-//             // return res.status(500).send({
-//             //     message: err.message
-//             // })
-//         }
-       
-//         return token = decoded.user
-      
-// })
     const decodedToken = decoded.user
     console.log(decodedToken);
-    console.log('GET Request sent to the Server');
-    MongoClient.connect(url, async(err, db) => {
+    //-------------------------------------------
+
+    console.log('GET COMPLETED QUIZES Request sent to the Server');
+    MongoClient.connect(process.env.MONGODB_URI, async(err, db) => {
             if (err)
                 throw err;
             let dataBase = db.db("QuizAnswers");
@@ -111,6 +104,6 @@ router.get("/completed", (req,res)=>{
         
      
 })
-
+//====================================================================
 
 export default router
