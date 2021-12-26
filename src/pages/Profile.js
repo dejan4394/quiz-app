@@ -57,7 +57,7 @@ const [ responseFromServer, setResponseFromServer ] = useState("")
 
     return (
       <Grid container display="flex" flexDirection="row">
-        <Grid item md={4} sm={12} height={{md:"100vh", sm:"40vh"}} backgroundColor="gray">
+        <Grid item md={4} sm={12} height={{md:"auto", sm:"40vh"}} backgroundColor="gray">
         
         {userData &&
           <Box padding="20px">
