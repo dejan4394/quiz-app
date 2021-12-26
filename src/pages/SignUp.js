@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useState } from "react";
 import WarningMsg from '../components/WarningMsg.js';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -30,6 +31,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp({setToken}) {
+
+
+  const navigate = useNavigate();
 
 const [ responseFromServer, setResponseFromServer ] = useState("")
 const [ user, setUser ] = useState({
@@ -65,9 +69,13 @@ const handleChange = (e)=>{
               'Access-Control-Allow-Origin': '*'}
     })
       .then((response) => {
-              if(response.success==="true"){
-                return (
-                  setToken(JSON.stringify(response.data.token)))
+        console.log(response.data);
+              if(response.data.success){
+                  setTimeout(() => {
+                    navigate("/login")
+                  }, 1000)
+                  
+                  
               }else{
               setResponseFromServer(response.data.message)}
           })

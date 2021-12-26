@@ -51,6 +51,7 @@ const ResponsiveAppBar = ({token}) => {
 
   const handleLogOut = ()=> {
     sessionStorage.removeItem("token")
+    window.location.href = '/'
   }
 
   return (
