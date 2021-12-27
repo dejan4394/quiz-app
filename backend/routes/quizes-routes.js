@@ -91,7 +91,7 @@ router.get("/completed", (req,res)=>{
                     res.status(200).json({
                         success: true,
                         result,
-                        message: "Your completed quizes!!!"})
+                        message: result.completed_quizes ? "Your completed quizes!!!" : "You don't have any completed quizes!!!" })
                     db.close();
                 }else{
                     res.status(200).json({

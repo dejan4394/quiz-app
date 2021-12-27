@@ -34,7 +34,7 @@ const [ responseFromServer, setResponseFromServer ] = useState("")
                     'Access-Control-Allow-Origin': '*'}
       })
         .then((response) => {
-          if(response.data.success){
+          if(response.data.success === true){
                 console.log(response);
                 console.log(response.data);
                 setUserData(response.data.result)
