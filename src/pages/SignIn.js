@@ -70,8 +70,8 @@ export default function SignIn({setToken, setData}) {
                    'Access-Control-Allow-Origin': '*'}
       })
         .then((response) => {
-          if(response.ok){
-            return JSON.stringify(response)
+          if(response.data.success === false){
+            return setResponseFromServer(response.data.message)
           }else{
                 console.log(response.data);
                 setResponseFromServer(response.data.message)

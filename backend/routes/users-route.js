@@ -75,8 +75,12 @@ router.post("/login", (req, res, next) => {
     passport.authenticate("local-signin", (err, user, info) => {
         
       if (err) throw err;
-      if (!user) res.send("No User Exists");
-      else {
+      if (!user){
+          return res.status(200).json({
+                success: false,
+                message: 'Incorect email or password!!!',
+            })
+};
         req.logIn(user, (err) => {
           if (err) throw err;
                 const payload = { user: user.user }
@@ -97,7 +101,7 @@ router.post("/login", (req, res, next) => {
       
 
         });
-      }
+      
     })(req, res, next);
   });
 //=================================================================================
