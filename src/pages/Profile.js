@@ -72,7 +72,7 @@ const [ responseFromServer, setResponseFromServer ] = useState("")
         
         </Grid>
         
-        <Grid item md={8} sm={12} xs={12} display="flex" flexDirection="column" justifyContent="center">
+        <Grid item md={8} sm={12} xs={12} display="flex" flexDirection="column" justifyItems="center">
 
           <Grid container justifyContent="center">
             <WarningMsg message={responseFromServer}/>

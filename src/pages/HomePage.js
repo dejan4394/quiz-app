@@ -1,7 +1,8 @@
 import { Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { makeStyles } from '@mui/styles'
-import { Link } from '@mui/material';
+// import { Link } from '@mui/material';
+import {Link} from "react-router-dom"
 import Image from "../images/background.png"
 
 const useStyles = makeStyles({
@@ -46,7 +47,7 @@ const HomePage = () => {
                     </Typography>
                 </Grid>
                 <Grid item className={classes.button}>
-                    <Link className={classes.link} href="http://localhost:3000/categories">
+                    <Link className={classes.link} to="/categories">
                      <Button variant='contained'>START YOUR QUIZZ</Button>
                     </Link> 
                 </Grid>
