@@ -16,7 +16,7 @@ import axios from "axios";
 import { useState } from "react"
 import WarningMsg from '../components/WarningMsg.js';
 import { useNavigate } from 'react-router-dom';
-
+import Progress from '../components/Progress.js';
 
 
 function Copyright(props) {
@@ -40,6 +40,7 @@ export default function SignIn({setToken, setData}) {
 
   const navigate = useNavigate();
  
+  const [ showProgres, setShowProgres ] = useState(false)
   const [ responseFromServer, setResponseFromServer ] = useState("")
   const [ user, setUser ] = useState({
     username:"",
@@ -78,6 +79,7 @@ export default function SignIn({setToken, setData}) {
                 setToken(JSON.stringify(response.data.token))
                 // setData(response.data.completed_quizes)
                 setTimeout(() => {
+                  setShowProgres(false)
                   navigate("/profile")
                 }, 1000);
                 
@@ -89,8 +91,9 @@ export default function SignIn({setToken, setData}) {
       };
     
 
-  return (
+  return ( 
     <ThemeProvider theme={theme}>
+    { showProgres ? <Progress/> :
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -156,7 +159,7 @@ export default function SignIn({setToken, setData}) {
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
+      </Container>}
     </ThemeProvider>
   );
 }

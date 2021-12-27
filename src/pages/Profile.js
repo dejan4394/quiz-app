@@ -2,15 +2,46 @@ import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import Typography from '@mui/material/Typography';
 import "@fontsource/roboto";
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import WarningMsg from '../components/WarningMsg.js';
 import CardComponent from "../components/CardComponent.js"
 import Box from '@mui/material/Box';
-import { height } from '@mui/system';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+import CircularProgress from '@mui/material/CircularProgress';
+import Progress from '../components/Progress.js';
 
+
+const useStyles = makeStyles({
+  link: {
+    color: 'white',
+    textDecoration: "none"
+  },
+  link_menu: {
+    textDecoration: "none"
+  },
+  heading:{
+      border:"2px solid #2196f3",
+      borderRadius: "5px",
+      backgroundColor: "#e3f2fd",
+      padding: "30px"
+  },
+  container_background:{
+      backgroundColor: "#cfd8dc"
+  },
+  button:{
+      marginBottom: "20px"
+  },
+  answers:{
+      width:"fill-available"
+  }
+});
 
 
 const Profile = ({token}) => {
+
+const classes = useStyles()
+
 const [ tokenStr, setTokenStr ] = useState('')
   useEffect(() => {
     setTokenStr(token)
@@ -21,9 +52,12 @@ const [ tokenStr, setTokenStr ] = useState('')
 const [ userData, setUserData ] = useState()
 const [ completedQuizes, setCompletedQuizes ] = useState([])
 const [ responseFromServer, setResponseFromServer ] = useState("")
+const [ showProgres, setShowProgres ] = useState(false)
 
 
     const getData = () => {
+
+      setShowProgres(true)
         console.log(token);
     if(tokenStr)
     axios({
@@ -40,6 +74,7 @@ const [ responseFromServer, setResponseFromServer ] = useState("")
                 setUserData(response.data.result)
                 setCompletedQuizes(response.data.result.completed_quizes)
                 setResponseFromServer(response.data.message)
+                setShowProgres(false)
               }else{
                 setResponseFromServer(response.data.message)
               }
@@ -73,19 +108,29 @@ const [ responseFromServer, setResponseFromServer ] = useState("")
         </Grid>
         
         <Grid item md={8} sm={12} xs={12} display="flex" flexDirection="column" justifyItems="center">
-
+          {showProgres ? 
+        <Progress/> :
+        <Grid>
           <Grid container justifyContent="center">
             <WarningMsg message={responseFromServer}/>
           </Grid>
         
           <Grid container display="flex" wrap="wrap" spacing={2} justifyContent="center">
-                  {completedQuizes && completedQuizes.map((item, idx)=>{
+                  {completedQuizes ? completedQuizes.map((item, idx)=>{
                             return <Grid item display="flex" md={6}> 
                                     <CardComponent key={idx} category={item.quiz_name} score={item.score}/>
                                   </Grid>
-                        })}
+                        }) : 
+                        <Grid item>
+                        <Link className={classes.link} to="/categories">
+                          <Button className={classes.button} variant='contained'>Quizz</Button>
+                        </Link>
+                        </Grid>
+                        }
           
           </Grid>
+          </Grid>
+          }
               
           </Grid>
       </Grid>

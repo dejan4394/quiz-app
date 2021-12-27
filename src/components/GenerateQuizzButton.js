@@ -85,7 +85,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
     
 
     const handleNextQuestion = (event)=>{
-        console.log(event);
+       
         const correctAnswer = event.target.name
         const givenAnswer = event.target.id
 
@@ -98,7 +98,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
         if (nextQuestion < generatedQuizz.length) {
             setCurrentQuestion(nextQuestion);
         } else {
-            setFinalScore(innitialScore);
+            setFinalScore(innitialScore+1);
             setShowScore(true)
             setData({
                 quizz_name: generatedQuizz[0].category,
