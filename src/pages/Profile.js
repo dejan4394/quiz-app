@@ -57,7 +57,7 @@ const [ responseFromServer, setResponseFromServer ] = useState("")
 
     return (
       <Grid container display="flex" flexDirection="row">
-        <Grid item md={4} sm={12} minHeight={{md:"100vh", sm:"40vh"}} backgroundColor="gray">
+        <Grid item md={4} sm={12} xs={12} minHeight={{md:"100vh", sm:"40vh"}} backgroundColor="gray">
         
         {userData &&
           <Box padding="20px">
@@ -72,13 +72,13 @@ const [ responseFromServer, setResponseFromServer ] = useState("")
         
         </Grid>
         
-        <Grid item md={8} display="flex" flexDirection="column" justifyItems="center">
+        <Grid item md={8} sm={12} xs={12} display="flex" flexDirection="column" justifyContent="center">
 
           <Grid container justifyContent="center">
             <WarningMsg message={responseFromServer}/>
           </Grid>
         
-          <Grid container display="flex" wrap="wrap" spacing={2}>
+          <Grid container display="flex" wrap="wrap" spacing={2} justifyContent="center">
                   {completedQuizes && completedQuizes.map((item, idx)=>{
                             return <Grid item display="flex" md={6}> 
                                     <CardComponent key={idx} category={item.quiz_name} score={item.score}/>

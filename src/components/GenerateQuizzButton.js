@@ -116,7 +116,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
         console.log(data);
         axios({
             method: "post",
-            url: "http://localhost:5000/results",
+            url: "/results",
             data:data,
             headers: {  "Authorization" : `${token}`,
                         "Content-Type": "application/json",
