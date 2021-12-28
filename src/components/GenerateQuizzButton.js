@@ -161,7 +161,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
                 </Grid>
                  : <Grid container justifyContent="center" display="flex" flexDirection="column">
                         <Grid container justifyContent="center">
-                            <Typography padding="50px">{`Your score is: ${finalScore}/${generatedQuizz.length}`}</Typography>
+                            <Typography padding="70px">{`Your score is: ${finalScore}/${generatedQuizz.length}`}</Typography>
                         </Grid>
                         <Button type='submit' variant='contained' on onClick={submitAnswers}>submit score</Button>
                     </Grid>}
