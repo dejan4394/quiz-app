@@ -1,7 +1,6 @@
 import { Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { makeStyles } from '@mui/styles'
-// import { Link } from '@mui/material';
 import {Link} from "react-router-dom"
 import Image from "../images/background.png"
 

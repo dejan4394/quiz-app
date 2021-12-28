@@ -100,7 +100,13 @@ const ResponsiveAppBar = ({token}) => {
               }}
             >
                 <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>New Quizz</Link></Typography>
+                  <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>Get Started</Link></Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>Contact</Link></Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>About</Link></Typography>
                 </MenuItem>
              
             </Menu>
@@ -128,7 +134,7 @@ const ResponsiveAppBar = ({token}) => {
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                <Link to="/categories" className={classes.link}>
-               New Quizz
+               GET STARTED
                </Link>
               </Button>
             </Link>

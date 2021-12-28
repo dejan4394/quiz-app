@@ -10,7 +10,7 @@ import { useState } from "react";
 import Profile from "./pages/Profile.js";
 
 
-function Application() {
+function App() {
   
   const { token, setToken } = UseToken()
 
@@ -37,4 +37,4 @@ function Application() {
   );
 }
 
-export default Application;
+export default App;

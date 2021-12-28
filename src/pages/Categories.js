@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@mui/material';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import QuizzGenerator from '../components//QuizzGenerator.js';
 

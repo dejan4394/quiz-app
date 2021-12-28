@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material'
-import React, {useEffect, useState, useCallback} from 'react'
+import React, { useState } from 'react'
 import SelectComponent from "./SelectComponent.js"
 import { GenerateQuizzButton } from './GenerateQuizzButton.js'
-import axios from 'axios'
+
 
 const QuizzGenerator = ({quizzData, token}) => {
 

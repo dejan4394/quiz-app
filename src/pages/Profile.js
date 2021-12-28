@@ -8,7 +8,6 @@ import CardComponent from "../components/CardComponent.js"
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
-import CircularProgress from '@mui/material/CircularProgress';
 import Progress from '../components/Progress.js';
 
 
@@ -117,13 +116,13 @@ const [ showProgres, setShowProgres ] = useState(false)
         
           <Grid container display="flex" wrap="wrap" spacing={2} justifyContent="center">
                   {completedQuizes ? completedQuizes.map((item, idx)=>{
-                            return <Grid item display="flex" md={6}> 
-                                    <CardComponent key={idx} category={item.quiz_name} score={item.score}/>
+                            return <Grid key={idx} item display="flex" md={6}> 
+                                    <CardComponent category={item.quiz_name} score={item.score}/>
                                   </Grid>
                         }) : 
                         <Grid item>
                         <Link className={classes.link} to="/categories">
-                          <Button className={classes.button} variant='contained'>Quizz</Button>
+                          <Button className={classes.button} variant='contained'>Get Started</Button>
                         </Link>
                         </Grid>
                         }
