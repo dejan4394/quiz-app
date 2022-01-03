@@ -9,7 +9,7 @@ import { decode } from "jsonwebtoken";
 
 const router = express.Router()
 
-//===SAVE NEW QUIZZ ROUTE======================================================
+//===SAVE NEW QUIZZ======================================================
 
 router.post("/", (req,res)=>{
 

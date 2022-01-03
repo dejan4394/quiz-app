@@ -42,6 +42,7 @@ const Profile = ({token}) => {
 const classes = useStyles()
 
 const [ tokenStr, setTokenStr ] = useState('')
+
   useEffect(() => {
     setTokenStr(token)
     getData()

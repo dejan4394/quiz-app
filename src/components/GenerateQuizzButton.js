@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import { Button, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import { newQuizActions } from '../store/new-quiz-slice';
+
 
 const useStyles = makeStyles({
     link: {
@@ -30,6 +33,8 @@ const useStyles = makeStyles({
 
 
 export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
+
+    const dispatch = useDispatch()
 
     console.log(token);
 
@@ -111,25 +116,34 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
     }
 
             
-    const submitAnswers = ()=>{
-        
+    const submitAnswers = (event)=>{
+        event.preventDefault()
+        dispatch(newQuizActions.saveNewQuiz({
+            quizz_name: data.quizz_name,
+            difficulty: data.difficulty,
+            score: data.score
+        }))
+
         console.log(data);
-        axios({
-            method: "post",
-            url: "/results",
-            data:data,
-            headers: {  "Authorization" : `${token}`,
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Origin': 'http://localhost:3000'}
-          })
-            .then((response) => {
-                    console.log(response);
-                    console.log(response.data.message);
+
+
+
+        // axios({
+        //     method: "post",
+        //     url: "/results",
+        //     data:data,
+        //     headers: {  "Authorization" : `${token}`,
+        //                 "Content-Type": "application/json",
+        //                 'Access-Control-Allow-Origin': 'http://localhost:3000'}
+        //   })
+        //     .then((response) => {
+        //             console.log(response);
+        //             console.log(response.data.message);
                    
-                })
-            .catch(function (response) {
-              console.log(response);
-            });
+        //         })
+        //     .catch(function (response) {
+        //       console.log(response);
+        //     });
     }
 
     return (
