@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux"
 import axios from "axios";
 import { uiActions } from "./store/ui-slice.js"
 import { submitResult } from "./store/new-quiz-slice"
+import BasicModal from "./components/Modal.js";
 
 let isInitial = true
 
@@ -23,8 +24,9 @@ function App() {
   const newQuizData = useSelector( state => state.new_quiz )
   console.log(newQuizData);
 
-  const notification = useSelector( state => state.ui.notification )
-  
+  // const notification = useSelector( state => state.ui.notification )
+  const open = useSelector(state => state.ui.showModal)
+
   
   const { token, setToken } = UseToken()
 
@@ -48,8 +50,9 @@ function App() {
 
   return (
     <Container maxWidth="md">
-    {notification && <Notification status={notification.status} title={notification.title} message={notification.message}/>}
+    
     <BrowserRouter>
+    {open && <BasicModal/>}
     <NavBar token={token}/>
             <Routes>
             <Route exact path="/" element={<HomePage />}/>  

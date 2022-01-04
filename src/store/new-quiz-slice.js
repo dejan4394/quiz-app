@@ -27,11 +27,7 @@ const newQuizSlice = createSlice({
 export const submitResult = ({newQuizData, token}) => {
     return async (dispatch) => {
       
-            dispatch(uiActions.showNotification({
-              status: 'pending...',
-              title: 'Sending...',
-              message: 'Sending Answers'
-            }))
+            
       
             const answers = await axios({
                   method: "post",
@@ -39,16 +35,23 @@ export const submitResult = ({newQuizData, token}) => {
                   data:newQuizData.newQuiz,
                   headers: {  "Authorization" : `${token}`,
                               "Content-Type": "application/json",
-                              'Access-Control-Allow-Origin': 'http://localhost:3000'}
+                              'Access-Control-Allow-Origin': 'http://localhost:3000'
+                            }
                 })
                   .then((response) => {
-                          console.log(response.data);
-                          console.log(response.data.message);
-                          dispatch(uiActions.showNotification({
-                            status: 'success',
-                            title: 'Successfull!!!',
-                            message: 'Answers sent!!!'
-                          }))
+                    console.log(response.data);
+                    console.log(response.data.message);
+                    dispatch(uiActions.responseFromServer({
+                        message: response.data.message
+                    }))
+
+                      if(response.data.success===true){
+                          return dispatch(uiActions.setModal({
+                            show: true
+                        }))
+                      }
+                          
+                          
                       })
                       
                   .catch((response)=>{

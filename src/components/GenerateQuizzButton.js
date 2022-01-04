@@ -54,11 +54,11 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
 
     const handleGenerate= async(event)=>{
         
+        event.preventDefault()
         setShowScore(false)
         setCurrentQuestion(0)
         setFinalScore(0)
         setInnitialScore(0)
-        event.preventDefault()
         console.log(category+difficulty+ammount);
 
         let apiUrl = `https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&limit=${ammount}`;
