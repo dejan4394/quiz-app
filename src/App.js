@@ -41,38 +41,8 @@ function App() {
     }
     //=======================================================
 
-    
-    // const submitAnswers = async () => {
-      
-    //   dispatch(uiActions.showNotification({
-    //     status: 'pending...',
-    //     title: 'Sending...',
-    //     message: 'Sending Answers'
-    //   }))
 
-    //   const answers = await axios({
-    //         method: "post",
-    //         url: "/results",
-    //         data:newQuizData.newQuiz,
-    //         headers: {  "Authorization" : `${token}`,
-    //                     "Content-Type": "application/json",
-    //                     'Access-Control-Allow-Origin': 'http://localhost:3000'}
-    //       })
-    //         .then((response) => {
-    //                 console.log(response.data);
-    //                 console.log(response.data.message);
-    //                 dispatch(uiActions.showNotification({
-    //                   status: 'success',
-    //                   title: 'Successfull!!!',
-    //                   message: 'Answers sent!!!'
-    //                 }))
-    //             })
-                
-    //         .catch(function (response) {
-    //           console.log(response);
-    //         });}
-
-            dispatch(submitResult({newQuizData, token}))
+    dispatch(submitResult({newQuizData, token}))
             
   }, [newQuizData])
 

@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { uiActions } from "./ui-slice";
 import axios from "axios";
 
+
+
 const newQuizSlice = createSlice({
     name: 'new_quiz',
     initialState: {
@@ -19,6 +21,8 @@ const newQuizSlice = createSlice({
     }
 })
 
+
+//===REDUX THUNK=================================================================================
 
 export const submitResult = ({newQuizData, token}) => {
     return async (dispatch) => {
@@ -53,6 +57,7 @@ export const submitResult = ({newQuizData, token}) => {
 
     }
 }
+//===============================================================================================
 
 export const newQuizActions = newQuizSlice.actions
 

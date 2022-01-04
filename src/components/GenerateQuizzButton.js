@@ -126,24 +126,6 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
 
         console.log(data);
 
-
-
-        // axios({
-        //     method: "post",
-        //     url: "/results",
-        //     data:data,
-        //     headers: {  "Authorization" : `${token}`,
-        //                 "Content-Type": "application/json",
-        //                 'Access-Control-Allow-Origin': 'http://localhost:3000'}
-        //   })
-        //     .then((response) => {
-        //             console.log(response);
-        //             console.log(response.data.message);
-                   
-        //         })
-        //     .catch(function (response) {
-        //       console.log(response);
-        //     });
     }
 
     return (
