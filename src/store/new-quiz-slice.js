@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { uiActions } from "./ui-slice";
+import axios from "axios";
 
 const newQuizSlice = createSlice({
     name: 'new_quiz',
     initialState: {
-        newQuiz : {
-            quizz_name: '',
-            difficulty: '',
-            score: ''
-        }
+        newQuiz : null
     },
     reducers: {
         saveNewQuiz( state, action ) {
@@ -20,6 +18,41 @@ const newQuizSlice = createSlice({
         }
     }
 })
+
+
+export const submitResult = ({newQuizData, token}) => {
+    return async (dispatch) => {
+      
+            dispatch(uiActions.showNotification({
+              status: 'pending...',
+              title: 'Sending...',
+              message: 'Sending Answers'
+            }))
+      
+            const answers = await axios({
+                  method: "post",
+                  url: "/results",
+                  data:newQuizData.newQuiz,
+                  headers: {  "Authorization" : `${token}`,
+                              "Content-Type": "application/json",
+                              'Access-Control-Allow-Origin': 'http://localhost:3000'}
+                })
+                  .then((response) => {
+                          console.log(response.data);
+                          console.log(response.data.message);
+                          dispatch(uiActions.showNotification({
+                            status: 'success',
+                            title: 'Successfull!!!',
+                            message: 'Answers sent!!!'
+                          }))
+                      })
+                      
+                  .catch((response)=>{
+                    console.log(response);
+                  })
+
+    }
+}
 
 export const newQuizActions = newQuizSlice.actions
 

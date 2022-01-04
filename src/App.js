@@ -1,5 +1,6 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import { Container } from "@mui/material";
+import Notification from "./components/Notification.js";
 import NavBar from "./components/NavBar.js"
 import Categories from "./pages/Categories.js"
 import SignUp from "./pages/SignUp.js"
@@ -8,16 +9,21 @@ import HomePage from "./pages/HomePage";
 import UseToken from "./UseToken.js";
 import { useState, useEffect } from "react";
 import Profile from "./pages/Profile.js";
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import axios from "axios";
+import { uiActions } from "./store/ui-slice.js"
+import { submitResult } from "./store/new-quiz-slice"
 
 let isInitial = true
 
 
 function App() {
 
+  const dispatch = useDispatch()
   const newQuizData = useSelector( state => state.new_quiz )
   console.log(newQuizData);
+
+  const notification = useSelector( state => state.ui.notification )
   
   
   const { token, setToken } = UseToken()
@@ -36,30 +42,43 @@ function App() {
     //=======================================================
 
     
-    axios({
-            method: "post",
-            url: "/results",
-            data:newQuizData.newQuiz,
-            headers: {  "Authorization" : `${token}`,
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Origin': 'http://localhost:3000'}
-          })
-            .then((response) => {
-                    console.log(response);
-                    console.log(response.data.message);
-                })
+    // const submitAnswers = async () => {
+      
+    //   dispatch(uiActions.showNotification({
+    //     status: 'pending...',
+    //     title: 'Sending...',
+    //     message: 'Sending Answers'
+    //   }))
+
+    //   const answers = await axios({
+    //         method: "post",
+    //         url: "/results",
+    //         data:newQuizData.newQuiz,
+    //         headers: {  "Authorization" : `${token}`,
+    //                     "Content-Type": "application/json",
+    //                     'Access-Control-Allow-Origin': 'http://localhost:3000'}
+    //       })
+    //         .then((response) => {
+    //                 console.log(response.data);
+    //                 console.log(response.data.message);
+    //                 dispatch(uiActions.showNotification({
+    //                   status: 'success',
+    //                   title: 'Successfull!!!',
+    //                   message: 'Answers sent!!!'
+    //                 }))
+    //             })
                 
-            .catch(function (response) {
-              console.log(response);
-            });
+    //         .catch(function (response) {
+    //           console.log(response);
+    //         });}
 
-
+            dispatch(submitResult({newQuizData, token}))
             
   }, [newQuizData])
 
   return (
     <Container maxWidth="md">
-    
+    {notification && <Notification status={notification.status} title={notification.title} message={notification.message}/>}
     <BrowserRouter>
     <NavBar token={token}/>
             <Routes>
