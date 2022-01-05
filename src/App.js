@@ -1,6 +1,5 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import { Container } from "@mui/material";
-import Notification from "./components/Notification.js";
 import NavBar from "./components/NavBar.js"
 import Categories from "./pages/Categories.js"
 import SignUp from "./pages/SignUp.js"
@@ -25,7 +24,7 @@ function App() {
   console.log(newQuizData);
 
   // const notification = useSelector( state => state.ui.notification )
-  const open = useSelector(state => state.ui.showModal)
+  const showModal = useSelector(state => state.ui.showModal)
 
   
   const { token, setToken } = UseToken()
@@ -52,7 +51,7 @@ function App() {
     <Container maxWidth="md">
     
     <BrowserRouter>
-    {open && <BasicModal/>}
+    {showModal && <BasicModal/>}
     <NavBar token={token}/>
             <Routes>
             <Route exact path="/" element={<HomePage />}/>  

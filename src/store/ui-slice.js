@@ -3,24 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 const uiSlice = createSlice({
     name: 'ui',
     initialState: {
-        notification: null,
+        showProgress: false,
         showModal: false,
-        response: ''
     },
     reducers: {
-        showNotification (state, action) {
-            state.notification = { 
-                status: action.payload.status,
-                title : action.payload.title,
-                message : action.payload.message
-            }
+        setShowProgress(state, action) {
+            state.showProgress = action.payload.progress
         },
         setModal (state, action) {
             state.showModal = action.payload.show
         },
-        responseFromServer (state, action) {
-            state.response = action.payload.message
-        }
     }
 })
 

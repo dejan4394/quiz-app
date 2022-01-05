@@ -10,7 +10,13 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import Progress from '../components/Progress.js';
 
+import { useSelector, useDispatch } from 'react-redux';
+// import serverResponse from '../store/responses-from-server-slice.js';
+import { serverResponseActions } from "../store/responses-from-server-slice"
+import { uiActions } from '../store/ui-slice.js';
+import { getUserData } from '../store/profile-actions.js';
 
+//===CSS==========================================
 const useStyles = makeStyles({
   link: {
     color: 'white',
@@ -35,56 +41,75 @@ const useStyles = makeStyles({
       width:"fill-available"
   }
 });
-
+//===================================================
 
 const Profile = ({token}) => {
+
+const dispatch = useDispatch()
 
 const classes = useStyles()
 
 const [ tokenStr, setTokenStr ] = useState('')
 
+const [ userData, setUserData ] = useState()
+const completed = useSelector( state => state.profile_data.completedQuizes )
+const [ responseFromServer, setResponseFromServer ] = useState("")
+const showProgress = useSelector( state => state.ui.showProgress )
+
+
   useEffect(() => {
     setTokenStr(token)
-    getData()
+    dispatch(getUserData({token, setUserData, setResponseFromServer}))
   }, [tokenStr])
 
 
-const [ userData, setUserData ] = useState()
-const [ completedQuizes, setCompletedQuizes ] = useState([])
-const [ responseFromServer, setResponseFromServer ] = useState("")
-const [ showProgres, setShowProgres ] = useState(false)
 
 
-    const getData = () => {
+    // const getData = () => {
+    // // dispatch(uiActions.setShowProgress({
+    // //       progress: true
+    // //     }))
+    
+    // if(tokenStr)
+    
+    // // axios({
+    // //     method: "get",
+    // //     url: "/results/completed",
+    // //     headers: { "Authorization" : `${tokenStr}`,
+    // //                 "Content-Type": "application/json",
+    // //                 'Access-Control-Allow-Origin': '*'}
+    // //   })
+    // //     .then((response) => {
+    // //       if(response.data.success === true){
+    // //             console.log(response);
+    // //             console.log(response.data);
+    // //             setUserData(response.data.result)
 
-      setShowProgres(true)
-        console.log(token);
-    if(tokenStr)
-    axios({
-        method: "get",
-        url: "/results/completed",
-        headers: { "Authorization" : `${tokenStr}`,
-                    "Content-Type": "application/json",
-                    'Access-Control-Allow-Origin': '*'}
-      })
-        .then((response) => {
-          if(response.data.success === true){
-                console.log(response);
-                console.log(response.data);
-                setUserData(response.data.result)
-                setCompletedQuizes(response.data.result.completed_quizes)
-                setResponseFromServer(response.data.message)
-                setShowProgres(false)
-              }else{
-                setResponseFromServer(response.data.message)
-              }
+    // //             dispatch(serverResponseActions.setCompletedQuizes({
+    // //               completed_quizes: response.data.result.completed_quizes
+    // //             }))
+                
+    // //             setResponseFromServer(response.data.message)
+                
+    // //             dispatch(uiActions.setShowProgress({  
+    // //               progress: false
+    // //             }))
+    // //             dispatch(uiActions.responseFromServer({
+    // //               message: 'Welcome!!!'
+    // //           }))
+    // //             dispatch(uiActions.setModal({
+    // //               show: true
+    // //             }))
+    // //           }else{
+    // //             setResponseFromServer(response.data.message)
+    // //           }
               
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
+    // //     })
+    // //     .catch((err) => {
+    // //       console.log(err.message);
+    // //     });
 
-      };
+    //   }
 
 
       
@@ -108,7 +133,7 @@ const [ showProgres, setShowProgres ] = useState(false)
         </Grid>
         
         <Grid item md={8} sm={12} xs={12} display="flex" flexDirection="column" justifyItems="center">
-          {showProgres ? 
+          {showProgress ? 
         <Progress/> :
         <Grid>
           <Grid container justifyContent="center">
@@ -116,7 +141,7 @@ const [ showProgres, setShowProgres ] = useState(false)
           </Grid>
         
           <Grid container display="flex" wrap="wrap" spacing={2} justifyContent="center">
-                  {completedQuizes ? completedQuizes.map((item, idx)=>{
+                  {completed ? completed.map((item, idx)=>{
                             return <Grid key={idx} item display="flex" md={6}> 
                                     <CardComponent category={item.quiz_name} score={item.score}/>
                                   </Grid>

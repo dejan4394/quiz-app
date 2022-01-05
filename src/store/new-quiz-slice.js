@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { serverResponseActions } from "./responses-from-server-slice";
 import { uiActions } from "./ui-slice";
 import axios from "axios";
 
@@ -27,8 +28,6 @@ const newQuizSlice = createSlice({
 export const submitResult = ({newQuizData, token}) => {
     return async (dispatch) => {
       
-            
-      
             const answers = await axios({
                   method: "post",
                   url: "/results",
@@ -41,7 +40,7 @@ export const submitResult = ({newQuizData, token}) => {
                   .then((response) => {
                     console.log(response.data);
                     console.log(response.data.message);
-                    dispatch(uiActions.responseFromServer({
+                    dispatch(serverResponseActions.messageFromServer({
                         message: response.data.message
                     }))
 
@@ -50,8 +49,6 @@ export const submitResult = ({newQuizData, token}) => {
                             show: true
                         }))
                       }
-                          
-                          
                       })
                       
                   .catch((response)=>{

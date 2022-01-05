@@ -40,7 +40,7 @@ const classes = useStyles()
 const dispatch = useDispatch()
 
   const open = useSelector(state => state.ui.showModal)
-  const response = useSelector(state => state.ui.response)
+  const message = useSelector(state => state.profile_data.serverMsg)
 
   const handleCloseModal = ()=>{
         dispatch(uiActions.setModal({
@@ -57,7 +57,7 @@ const dispatch = useDispatch()
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {response}
+            {message}
           </Typography>
           
           <Button onClick={handleCloseModal} variant='contained'><Link className={classes.link} to='/profile'>GO TO PROFILE</Link></Button>
