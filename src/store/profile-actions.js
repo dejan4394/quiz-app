@@ -5,6 +5,10 @@ import { uiActions } from "./ui-slice";
 export const getUserData = ({ token, setUserData, setResponseFromServer }) => {
 
   return async (dispatch) => {
+
+    dispatch(uiActions.setModal({
+      show: false
+  }))
     
     dispatch(uiActions.setShowProgress({  
       progress: true
