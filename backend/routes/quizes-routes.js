@@ -1,10 +1,6 @@
 import express from "express"
-import User from "../models/user.js"
-// import User from "../models/signup.js";
 import { MongoClient } from 'mongodb';
-// import jsonwebtoken  from 'jsonwebtoken'
 import jwt_decode from "jwt-decode"
-import { decode } from "jsonwebtoken";
 
 
 const router = express.Router()
@@ -91,7 +87,7 @@ router.get("/completed", (req,res)=>{
                     res.status(200).json({
                         success: true,
                         result,
-                        message: result.completed_quizes ? "Your completed quizes!!!" : "You don't have any completed quizes!!!" })
+                        message: result.completed_quizes > 0 ? "Your completed quizes!!!" : "You don't have any completed quizes!!!" })
                     db.close();
                 }else{
                     res.status(200).json({

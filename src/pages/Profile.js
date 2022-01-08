@@ -49,70 +49,22 @@ const dispatch = useDispatch()
 
 const classes = useStyles()
 
-const [ tokenStr, setTokenStr ] = useState('')
-
 const [ userData, setUserData ] = useState()
 const completed = useSelector( state => state.profile_data.completedQuizes )
 const [ responseFromServer, setResponseFromServer ] = useState("")
 const showProgress = useSelector( state => state.ui.showProgress )
-
+const changed = useSelector( state => state.profile_data.changed )
 
   useEffect(() => {
-    setTokenStr(token)
-    dispatch(getUserData({token, setUserData, setResponseFromServer}))
-  }, [tokenStr])
+
+        if(changed){
+          dispatch(getUserData({token, setUserData, setResponseFromServer}))
+      }
+        dispatch(serverResponseActions.setChanged())
+  }, [token, changed])
 
 
 
-
-    // const getData = () => {
-    // // dispatch(uiActions.setShowProgress({
-    // //       progress: true
-    // //     }))
-    
-    // if(tokenStr)
-    
-    // // axios({
-    // //     method: "get",
-    // //     url: "/results/completed",
-    // //     headers: { "Authorization" : `${tokenStr}`,
-    // //                 "Content-Type": "application/json",
-    // //                 'Access-Control-Allow-Origin': '*'}
-    // //   })
-    // //     .then((response) => {
-    // //       if(response.data.success === true){
-    // //             console.log(response);
-    // //             console.log(response.data);
-    // //             setUserData(response.data.result)
-
-    // //             dispatch(serverResponseActions.setCompletedQuizes({
-    // //               completed_quizes: response.data.result.completed_quizes
-    // //             }))
-                
-    // //             setResponseFromServer(response.data.message)
-                
-    // //             dispatch(uiActions.setShowProgress({  
-    // //               progress: false
-    // //             }))
-    // //             dispatch(uiActions.responseFromServer({
-    // //               message: 'Welcome!!!'
-    // //           }))
-    // //             dispatch(uiActions.setModal({
-    // //               show: true
-    // //             }))
-    // //           }else{
-    // //             setResponseFromServer(response.data.message)
-    // //           }
-              
-    // //     })
-    // //     .catch((err) => {
-    // //       console.log(err.message);
-    // //     });
-
-    //   }
-
-
-      
     
 
     return (
@@ -143,7 +95,7 @@ const showProgress = useSelector( state => state.ui.showProgress )
           <Grid container display="flex" wrap="wrap" spacing={2} justifyContent="center">
                   {completed ? completed.map((item, idx)=>{
                             return <Grid key={idx} item display="flex" md={6}> 
-                                    <CardComponent category={item.quiz_name} score={item.score}/>
+                                    <CardComponent token={token} category={item.quiz_name} score={item.score} id={idx}/>
                                   </Grid>
                         }) : 
                         <Grid item>

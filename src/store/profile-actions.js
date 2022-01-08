@@ -1,5 +1,5 @@
 import axios from "axios";
-import serverResponse, { serverResponseActions } from "./responses-from-server-slice";
+import { serverResponseActions } from "./responses-from-server-slice";
 import { uiActions } from "./ui-slice";
 
 export const getUserData = ({ token, setUserData, setResponseFromServer }) => {
@@ -10,19 +10,19 @@ export const getUserData = ({ token, setUserData, setResponseFromServer }) => {
       progress: true
     }))
 
+    dispatch(serverResponseActions.setChanged())
+
     const getData = async () => {
 
-      console.log(token);
         const response = await axios({
               method: "get",
-              url: "/results/completed",
+              url: "/quizes/completed",
               headers: {  "Authorization" : `${token}`,
                           "Content-Type": "application/json",
                           'Access-Control-Allow-Origin': '*'
                         }
             })
 
-          console.log("kdjnbfkjfls");
           const data = response
 
           return data
@@ -42,9 +42,9 @@ export const getUserData = ({ token, setUserData, setResponseFromServer }) => {
               dispatch(serverResponseActions.messageFromServer({
                 message: 'Welcome!!!'
             }))
-              dispatch(uiActions.setModal({
-                show: true
-              }))
+              // dispatch(uiActions.setModal({
+              //   show: true
+              // }))
           } catch (error){
               console.log(error);
           }

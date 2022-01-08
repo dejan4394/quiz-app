@@ -4,7 +4,8 @@ const serverResponse = createSlice({
     name: 'profile_data',
     initialState: {
         completedQuizes: null,
-        serverMsg: ''
+        serverMsg: '',
+        changed: false
     },
     reducers: {
         setCompletedQuizes (state, action) {
@@ -13,6 +14,9 @@ const serverResponse = createSlice({
         },
         messageFromServer (state, action) {
             state.serverMsg = action.payload.message
+        },
+        setChanged(state) {
+            state.changed = !state.changed
         }
     }
 })

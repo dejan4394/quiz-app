@@ -6,6 +6,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
 
+import { useDispatch } from 'react-redux';
+import { deleteQuiz } from '../store/delete-quiz-slice';
+import { serverResponseActions } from '../store/responses-from-server-slice';
+
 const useStyles = makeStyles({
     link: {
       color: 'white',
@@ -31,9 +35,22 @@ const useStyles = makeStyles({
     }
   });
 
-export default function CardComponent({category, score}) {
+export default function CardComponent({token, category, score, id}) {
+
+  const dispatch = useDispatch()
 
     const classes = useStyles()
+
+
+
+    const handleDelete = (event) => {
+      console.log(event.target.id);
+      console.log(token);
+      const quizId = {id: event.target.id}
+     
+      dispatch(deleteQuiz({ token, quizId })) 
+      
+    }
 
   return (
     <Card sx={{ minWidth: 220 }} className={classes.card} >
@@ -52,7 +69,7 @@ export default function CardComponent({category, score}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">DELETE RESULT</Button>
+        <Button id={id} size="small" onClick={handleDelete}>DELETE RESULT</Button>
       </CardActions>
     </Card>
   );

@@ -1,37 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 import { serverResponseActions } from "./responses-from-server-slice";
 import { uiActions } from "./ui-slice";
-import axios from "axios";
 
 
+//===REDUX THUNK/ DELETE REQUEST=================================================================================
 
-const newQuizSlice = createSlice({
-    name: 'new_quiz',
-    initialState: {
-        newQuiz : null
-    },
-    reducers: {
-        saveNewQuiz( state, action ) {
-            state.newQuiz = {
-                quizz_name : action.payload.quizz_name,
-                difficulty : action.payload.difficulty,
-                score : action.payload.score
-        }
-        }
-    }
-})
-
-
-//===REDUX THUNK/ SUBMI NEW RESULTS=================================================================================
-
-export const submitResult = ({newQuizData, token}) => {
+export const deleteQuiz = ({token, quizId}) => {
     return async (dispatch) => {
-      
+               
             const answers = await axios({
                   method: "post",
-                  url: "/quizes",
-                  data:newQuizData.newQuiz,
+                  url: "/quizes/delete",
+                  data:quizId,
                   headers: {  "Authorization" : `${token}`,
                               "Content-Type": "application/json",
                               'Access-Control-Allow-Origin': 'http://localhost:3000'
@@ -45,11 +26,15 @@ export const submitResult = ({newQuizData, token}) => {
                     }))
 
                       if(response.data.success===true){
-                          return dispatch(uiActions.setModal({
+                           dispatch(uiActions.setModal({
                             show: true
                         }))
                       }
+
+                    dispatch(serverResponseActions.setChanged())
                       })
+
+                      
                       
                   .catch((response)=>{
                     console.log(response);
@@ -58,7 +43,3 @@ export const submitResult = ({newQuizData, token}) => {
     }
 }
 //===============================================================================================
-
-export const newQuizActions = newQuizSlice.actions
-
-export default newQuizSlice

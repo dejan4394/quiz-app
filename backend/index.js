@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Results from "./routes/quizes-routes.js"
 import Users from "./routes/users-route.js"
+import DeleteQuiz from "./routes/delete-quiz-route.js"
 import Cors from "cors";
 import session from "express-session";
 import passport from "./passport/index.js"
@@ -43,8 +44,9 @@ app.use(passport.initialize());
 
 //==ROOT ROUTES================
 
-app.use("/results", Results)
+app.use("/quizes", Results)
 app.use("/users", Users)
+app.use("/quizes", DeleteQuiz)
 
 
 const port = process.env.PORT || 5000;
