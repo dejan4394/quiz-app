@@ -87,7 +87,7 @@ router.get("/completed", (req,res)=>{
                     res.status(200).json({
                         success: true,
                         result,
-                        message: result.completed_quizes.length > 1 ? "Your completed quizes!!!" : "You don't have any completed quizes!!!" })
+                        message: result.completed_quizes.length > 0 ? "Your completed quizes!!!" : "You don't have any completed quizes!!!" })
                     db.close();
                 }else{
                     res.status(200).json({
