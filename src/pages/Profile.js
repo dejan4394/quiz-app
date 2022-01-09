@@ -64,7 +64,7 @@ const changed = useSelector( state => state.profile_data.changed )
   }, [token, changed])
 
 
-
+  console.log(completed);
     
 
     return (
@@ -92,8 +92,9 @@ const changed = useSelector( state => state.profile_data.changed )
             <WarningMsg message={responseFromServer}/>
           </Grid>
         
+          {completed && 
           <Grid container display="flex" wrap="wrap" spacing={2} justifyContent="center">
-                  {completed ? completed.map((item, idx)=>{
+                  {completed.length > 0 ? completed.map((item, idx)=>{
                             return <Grid key={idx} item display="flex" md={6}> 
                                     <CardComponent token={token} category={item.quiz_name} score={item.score} id={idx}/>
                                   </Grid>
@@ -106,6 +107,7 @@ const changed = useSelector( state => state.profile_data.changed )
                         }
           
           </Grid>
+          }
           </Grid>
           }
               

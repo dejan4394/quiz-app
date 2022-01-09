@@ -9,7 +9,6 @@ const router = express.Router()
 //===DELETE QUIZZ======================================================
 
 router.post("/delete", (req,res)=>{
-console.log('ssssssssss');
     let token  = req.headers.authorization
     console.log(token);
     var decoded = jwt_decode(token);
@@ -41,9 +40,7 @@ console.log('ssssssssss');
                     }
                     const quizToDeleteId = `completed_quizes.${id.id}`
                     console.log(quizToDeleteId);
-                // dataBase.collection("users").updateOne({
-                //     user: decodedToken
-                // },{ $push: { completed_quizes: newSubmitedResults} })
+           
                     dataBase.collection("users").updateOne({user: decodedToken}, {$unset : { [quizToDeleteId] : 1 }}) 
                     dataBase.collection("users").updateOne({user: decodedToken}, {$pull : {"completed_quizes" : null}})
 

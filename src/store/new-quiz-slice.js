@@ -46,7 +46,11 @@ export const submitResult = ({newQuizData, token}) => {
 
                       if(response.data.success===true){
                           return dispatch(uiActions.setModal({
-                            show: true
+                            show: true,
+                            displayFirstButton : 'unset',
+                            textFirstButton : 'go to profile',
+                            displaySecondButton: 'unset',
+                            textSecondButton: 'probaj pak'
                         }))
                       }
                       })

@@ -24,14 +24,14 @@ function App() {
   console.log(newQuizData);
 
   // const notification = useSelector( state => state.ui.notification )
-  const showModal = useSelector(state => state.ui.showModal)
+  const modal = useSelector(state => state.ui.modal)
 
   
   const { token, setToken } = UseToken()
 
   const [ data, setData ] = useState()
   console.log(data);
-
+  console.log(modal.showModal);
 
   useEffect(() => {
 
@@ -51,7 +51,7 @@ function App() {
     <Container maxWidth="md">
     
     <BrowserRouter>
-    {showModal && <BasicModal/>}
+    {modal.showModal && <BasicModal/>}
     <NavBar token={token}/>
             <Routes>
             <Route exact path="/" element={<HomePage />}/>  

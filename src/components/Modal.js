@@ -31,16 +31,20 @@ const useStyles = makeStyles({
     link: {
       color: 'white',
       textDecoration: "none"
+    },
+    button: {
+      margin: '10px'
     }
   });
 
-export default function BasicModal() {
+export default function BasicModal({displaySecondButton}) {
 const classes = useStyles()
 
 const dispatch = useDispatch()
 
-  const open = useSelector(state => state.ui.showModal)
+  const open = useSelector(state => state.ui.modal.showModal)
   const message = useSelector(state => state.profile_data.serverMsg)
+  const modal = useSelector( state => state.ui.modal )
 
   const handleCloseModal = ()=>{
         dispatch(uiActions.setModal({
@@ -60,7 +64,8 @@ const dispatch = useDispatch()
             {message}
           </Typography>
           
-          <Button onClick={handleCloseModal} variant='contained'><Link className={classes.link} to='/profile'>GO TO PROFILE</Link></Button>
+          <Button className={classes.button} onClick={handleCloseModal} variant='contained' sx={{ display: modal.firstButton.displayFirstButton }}><Link className={classes.link} to='/profile'>{modal.firstButton.textFirstButton}</Link></Button>
+          <Button className={classes.button} onClick={handleCloseModal} variant='contained' sx={{ display: modal.secondButton.displaySecondButton }}>{modal.secondButton.textSecondButton}</Button>
         </Box>
       </Modal>
     </div>

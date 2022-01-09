@@ -4,15 +4,35 @@ const uiSlice = createSlice({
     name: 'ui',
     initialState: {
         showProgress: false,
-        showModal: false,
+        modal :{
+            showModal: false,
+            firstButton: {
+            displayFirstButton : 'none',
+            textFirstButton : ''
+            },
+            secondButton: {
+            displaySecondButton : 'none',
+            textSecondButton : ''
+            }
+    }
     },
     reducers: {
         setShowProgress(state, action) {
             state.showProgress = action.payload.progress
         },
         setModal (state, action) {
-            state.showModal = action.payload.show
-        },
+            state.modal = {
+                showModal : action.payload.show,
+                firstButton : {
+                    displayFirstButton : action.payload.displayFirstButton,
+                    textFirstButton : action.payload.textFirstButton
+                },
+                secondButton : {
+                    displaySecondButton : action.payload.displaySecondButton,
+                    textSecondButton : action.payload.textSecondButton
+                }
+            }
+        }
     }
 })
 
