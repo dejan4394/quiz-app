@@ -24,18 +24,17 @@ export const deleteQuiz = ({token, quizId}) => {
                     dispatch(serverResponseActions.messageFromServer({
                         message: response.data.message
                     }))
+                    dispatch(uiActions.setModal({
+                      show: true,
+                      displayFirstButton: 'none',
+                      displaySecondButton: 'none'
+                    }))
+                    setTimeout(()=>{
+                      dispatch(serverResponseActions.setChanged())},
+                       1000)
 
-                      if(response.data.success===true){
-                           dispatch(uiActions.setModal({
-                            show: true
-                        }))
-                      }
-
-                    dispatch(serverResponseActions.setChanged())
-                      })
-
-                      
-                      
+                    })
+                    
                   .catch((response)=>{
                     console.log(response);
                   })

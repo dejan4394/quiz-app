@@ -117,6 +117,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
 
             
     const submitAnswers = (event)=>{
+        setShowScore(false)
         event.preventDefault()
         dispatch(newQuizActions.saveNewQuiz({
             quizz_name: data.quizz_name,

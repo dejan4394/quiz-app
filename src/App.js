@@ -5,12 +5,13 @@ import Categories from "./pages/Categories.js"
 import SignUp from "./pages/SignUp.js"
 import SignIn from "./pages/SignIn.js";
 import HomePage from "./pages/HomePage";
-import UseToken from "./UseToken.js";
-import { useState, useEffect } from "react";
+
+import { useEffect } from "react";
 import Profile from "./pages/Profile.js";
 import { useSelector, useDispatch } from "react-redux"
-import axios from "axios";
-import { uiActions } from "./store/ui-slice.js"
+
+
+import { tokenActions } from "./store/token-slice.js";
 import { submitResult } from "./store/new-quiz-slice"
 import BasicModal from "./components/Modal.js";
 
@@ -20,21 +21,22 @@ let isInitial = true
 function App() {
 
   const dispatch = useDispatch()
+
   const newQuizData = useSelector( state => state.new_quiz )
   console.log(newQuizData);
 
-  // const notification = useSelector( state => state.ui.notification )
+  const tokenStr = useSelector( state=> state.token.token_string )
+  console.log(tokenStr);
+
   const modal = useSelector(state => state.ui.modal)
-
-  
-  const { token, setToken } = UseToken()
-
-  const [ data, setData ] = useState()
-  console.log(data);
   console.log(modal.showModal);
+
 
   useEffect(() => {
 
+    dispatch(tokenActions.saveToken({
+      token_string : sessionStorage.getItem('token')
+  }))
     //PREVENT SENDING REQ ON EACH LOADING OF THE PAGE========
     if(isInitial){
       isInitial = false
@@ -43,7 +45,7 @@ function App() {
     //=======================================================
 
 
-    dispatch(submitResult({newQuizData, token}))
+    dispatch(submitResult({newQuizData, tokenStr}))
             
   }, [newQuizData])
 
@@ -52,13 +54,13 @@ function App() {
     
     <BrowserRouter>
     {modal.showModal && <BasicModal/>}
-    <NavBar token={token}/>
+    <NavBar token={tokenStr}/>
             <Routes>
             <Route exact path="/" element={<HomePage />}/>  
-            <Route exact path="/categories" element={!token ? <SignUp setToken={setToken} /> : <Categories token={token}/>}/>  
-            <Route exact path="/login" element={<SignIn setData={setData} setToken={setToken} />}/>  
-            <Route exact path="/signup" element={<SignUp setToken={setToken}/>}/>  
-            <Route exact path="/profile" element={<Profile token={token}/>}/>  
+            <Route exact path="/categories" element={!tokenStr ? <SignUp /> : <Categories token={tokenStr}/>}/>  
+            <Route exact path="/login" element={<SignIn />}/>  
+            <Route exact path="/signup" element={<SignUp />}/>  
+            <Route exact path="/profile" element={<Profile token={tokenStr}/>}/>  
             </Routes>  
     </BrowserRouter>
     </Container>

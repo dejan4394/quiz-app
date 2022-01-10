@@ -25,14 +25,14 @@ const newQuizSlice = createSlice({
 
 //===REDUX THUNK/ SUBMI NEW RESULTS=================================================================================
 
-export const submitResult = ({newQuizData, token}) => {
+export const submitResult = ({newQuizData, tokenStr}) => {
     return async (dispatch) => {
       
             const answers = await axios({
                   method: "post",
                   url: "/quizes",
                   data:newQuizData.newQuiz,
-                  headers: {  "Authorization" : `${token}`,
+                  headers: {  "Authorization" : `${tokenStr}`,
                               "Content-Type": "application/json",
                               'Access-Control-Allow-Origin': 'http://localhost:3000'
                             }

@@ -18,6 +18,11 @@ import WarningMsg from '../components/WarningMsg.js';
 import { useNavigate } from 'react-router-dom';
 import Progress from '../components/Progress.js';
 
+import { serverResponseActions } from '../store/responses-from-server-slice.js';
+import { uiActions } from '../store/ui-slice.js';
+import { useDispatch } from "react-redux"
+import { tokenActions } from '../store/token-slice.js';
+
 
 function Copyright(props) {
   return (
@@ -36,10 +41,13 @@ const theme = createTheme();
 
 
 
-export default function SignIn({setToken, setData}) {
+export default function SignIn({setToken}) {
 
+
+  const dispatch = useDispatch()
   const navigate = useNavigate();
  
+
   const [ showProgres, setShowProgres ] = useState(false)
   const [ responseFromServer, setResponseFromServer ] = useState("")
   const [ user, setUser ] = useState({
@@ -76,8 +84,23 @@ export default function SignIn({setToken, setData}) {
           }else{
                 console.log(response.data);
                 setResponseFromServer(response.data.message)
-                setToken(JSON.stringify(response.data.token))
-                // setData(response.data.completed_quizes)
+               
+                const tokenStr = response.data.token
+                sessionStorage.setItem('token', tokenStr);
+
+                dispatch(tokenActions.saveToken({
+                  token_string: JSON.stringify(response.data.token)
+                }))
+
+                dispatch(serverResponseActions.messageFromServer({
+                  message: response.data.message
+              }))
+                dispatch(uiActions.setModal({
+                  show: true,
+                  displayFirstButton: 'none',
+                  displaySecondButton: 'none'
+                }))
+               
                 setTimeout(() => {
                   setShowProgres(false)
                   navigate("/profile")
