@@ -2,7 +2,7 @@
   "name": "react_course",
   "version": "0.1.0",
   "engines": {
-    "node": "16.13.0"
+    "node": "16.13.2"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +36,7 @@
     "react-switch": "^6.0.0",
     "react-toolkit": "^2.0.0-alpha.6",
     "routes": "^2.1.0",
+    "serve": "^13.0.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
