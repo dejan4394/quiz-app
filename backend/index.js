@@ -7,6 +7,7 @@ import Cors from "cors";
 import session from "express-session";
 import passport from "./passport/index.js"
 import cookieParser from "cookie-parser";
+import path from "node:path"
 
 const app = express()
 
@@ -48,6 +49,16 @@ app.use("/quizes", Results)
 app.use("/users", Users)
 app.use("/quizes", DeleteQuiz)
 
+
+// If in production...================
+if( process.env.NODE_ENV=== 'production' ) {
+  //Set static folder
+  app.use(express.static('build'))
+
+  app.get( '*', ( req, res ) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+  } )
+}
 
 const port = process.env.PORT || 5000;
 

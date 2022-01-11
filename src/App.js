@@ -28,8 +28,8 @@ function App() {
   const tokenStr = useSelector( state=> state.token.token_string )
   console.log(tokenStr);
 
-  const modal = useSelector(state => state.ui.modal)
-  console.log(modal.showModal);
+  const modal = useSelector(state => state.ui.modal.showModal)
+  console.log(modal);
 
 
   useEffect(() => {
@@ -53,7 +53,7 @@ function App() {
     <Container maxWidth="md">
     
     <BrowserRouter>
-    {modal.showModal && <BasicModal/>}
+    {modal && <BasicModal/>}
     <NavBar token={tokenStr}/>
             <Routes>
             <Route exact path="/" element={<HomePage />}/>  
