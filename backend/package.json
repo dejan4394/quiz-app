@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "16.13.2"
+    "node": "16.13.2 "
   },
   "main": "index.js",
   "type": "module",
@@ -12,7 +12,7 @@
     "client": "cd ..  && npm start",
     "dev": "concurrently \"nodemon index.js\" \"npm run client\"",
     "start": "node index.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
+    "heroku-postbuild": "npm install && npm run build"
   },
   "keywords": [],
   "author": "",
