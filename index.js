@@ -8,7 +8,9 @@ import session from "express-session";
 import passport from "./passport/index.js"
 import cookieParser from "cookie-parser";
 import path from "node:path"
+import { dirname } from "node:path";
 
+const __dirname = dirname(__filename)
 
 const app = express()
  
