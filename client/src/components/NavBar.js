@@ -13,6 +13,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
+import history from "../history"
+import { useNavigate } from 'react-router';
+
+import { useDispatch } from 'react-redux';
+import { tokenActions } from '../store/token-slice';
 
 
 const useStyles = makeStyles({
@@ -27,6 +32,8 @@ const useStyles = makeStyles({
 });
 
 const ResponsiveAppBar = ({token}) => {
+
+  const dispatch = useDispatch()
 
   const classes = useStyles()
 
@@ -51,7 +58,10 @@ const ResponsiveAppBar = ({token}) => {
 
   const handleLogOut = ()=> {
     sessionStorage.removeItem("token")
-    window.location.href = '/'
+    dispatch(tokenActions.deleteToken())
+    // navigate('/')
+    history.push("/")
+    // window.location.href = '/'
   }
 
   return (
@@ -185,7 +195,7 @@ const ResponsiveAppBar = ({token}) => {
                   <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>New Quizz</Link></Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography onClick={handleLogOut} textAlign="center"><Link to="/signup" className={classes.menu_link}>Log Out</Link></Typography>
+                  <Typography onClick={handleLogOut} textAlign="center"><Link to="/" className={classes.menu_link}>Log Out</Link></Typography>
                 </MenuItem>
             </Menu>
           </Box>

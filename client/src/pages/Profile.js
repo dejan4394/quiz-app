@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import Progress from '../components/Progress.js';
+import { useLocation } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux';
 // import serverResponse from '../store/responses-from-server-slice.js';
@@ -44,6 +45,7 @@ const useStyles = makeStyles({
 //===================================================
 
 const Profile = ({token}) => {
+
 
 const dispatch = useDispatch()
 
@@ -87,12 +89,17 @@ const changed = useSelector( state => state.profile_data.changed )
         <Grid item md={8} sm={12} xs={12} display="flex" flexDirection="column" justifyItems="center">
           {showProgress ? 
         <Progress/> :
-        <Grid>
+        <Grid container justifyContent='center'>
           <Grid container justifyContent="center">
             <WarningMsg message={responseFromServer}/>
           </Grid>
         
-          {completed && 
+          {!completed ? 
+          <Grid item>
+          <Link className={classes.link} to="/categories">
+            <Button className={classes.button} variant='contained'>Get Started</Button>
+          </Link>
+          </Grid>:
           <Grid container display="flex" wrap="wrap" spacing={2} justifyContent="center">
                   {completed.length > 0 ? completed.map((item, idx)=>{
                             return <Grid key={idx} item display="flex" md={6}> 

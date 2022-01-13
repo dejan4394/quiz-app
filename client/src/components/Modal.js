@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     }
   });
 
-export default function BasicModal({displaySecondButton}) {
+export default function BasicModal() {
 const classes = useStyles()
 
 const dispatch = useDispatch()
@@ -50,6 +50,7 @@ const dispatch = useDispatch()
         dispatch(uiActions.setModal({
             show: false
         }))
+
   }
 
   return (

@@ -1,10 +1,8 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom"
+import React, { Suspense } from "react";
+
+import { Route, Routes} from "react-router-dom"
 import { Container } from "@mui/material";
 import NavBar from "./components/NavBar.js"
-import Categories from "./pages/Categories.js"
-import SignUp from "./pages/SignUp.js"
-import SignIn from "./pages/SignIn.js";
-import HomePage from "./pages/HomePage";
 
 import { useEffect } from "react";
 import Profile from "./pages/Profile.js";
@@ -12,17 +10,23 @@ import { useSelector, useDispatch } from "react-redux"
 
 
 import { tokenActions } from "./store/token-slice.js";
-import { submitResult } from "./store/new-quiz-slice"
+import { submitResult } from "./store/new-answers-slice"
 import BasicModal from "./components/Modal.js";
+
+const HomePage = React.lazy( ()=> import("./pages/HomePage") )
+const Categories = React.lazy( () => import("./pages/Categories"))
+const SignUp = React.lazy( () => import("./pages/SignUp") )
+const SignIn = React.lazy( () => import("./pages/SignIn") )
 
 let isInitial = true
 
 
 function App() {
+  
 
   const dispatch = useDispatch()
 
-  const newQuizData = useSelector( state => state.new_quiz )
+  const newQuizData = useSelector( state => state.new_answers )
   console.log(newQuizData);
 
   const tokenStr = useSelector( state=> state.token.token_string )
@@ -51,18 +55,20 @@ function App() {
 
   return (
     <Container maxWidth="md">
+    <Suspense fallback={<BasicModal/>}>
     
-    <BrowserRouter>
     {modal && <BasicModal/>}
     <NavBar token={tokenStr}/>
             <Routes>
-            <Route exact path="/" element={<HomePage />}/>  
-            <Route exact path="/categories" element={!tokenStr ? <SignUp /> : <Categories token={tokenStr}/>}/>  
-            <Route exact path="/login" element={<SignIn />}/>  
-            <Route exact path="/signup" element={<SignUp />}/>  
-            <Route exact path="/profile" element={<Profile token={tokenStr}/>}/>  
+              <Route exact path="/" element={<HomePage />}/>
+              <Route exact path="/categories" element={!tokenStr ? <SignUp /> : <Categories token={tokenStr}/>}/>  
+              <Route exact path="/login" element={<SignIn />}/>  
+              <Route exact path="/signup" element={<SignUp />}/>  
+              <Route exact path="/profile" element={<Profile token={tokenStr}/>}/>  
             </Routes>  
-    </BrowserRouter>
+  
+    </Suspense>
+    
     </Container>
   );
 }

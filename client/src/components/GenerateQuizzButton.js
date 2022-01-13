@@ -2,8 +2,11 @@ import React, {useState} from 'react'
 import { Button, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import axios from 'axios'
-import { useDispatch } from 'react-redux';
-import { newQuizActions } from '../store/new-quiz-slice';
+
+
+import { useDispatch, useSelector } from 'react-redux';
+import { newAnswersActions } from '../store/new-answers-slice';
+import { fetchNewQuizz } from '../store/generate-new-quiz-slice';
 
 
 const useStyles = makeStyles({
@@ -36,11 +39,10 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
 
     const dispatch = useDispatch()
 
-    console.log(token);
-
     const classes = useStyles()
 
-    const [ generatedQuizz, setGeneratedQuizz ] = useState([])
+    
+    const generatedQuizz = useSelector(state => state.generated_quizz.generatedQuizz)
     const [ currentQuestion, setCurrentQuestion ] = useState(0)
     const [ innitialScore, setInnitialScore ] = useState(0)
     const [ showScore, setShowScore ] = useState(false)
@@ -52,36 +54,17 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
     })
     
 
-    const handleGenerate= async(event)=>{
-        
+
+    const handleGenerate= (event)=>{
         event.preventDefault()
+
+        dispatch(fetchNewQuizz({category, difficulty, ammount}))
+        
         setShowScore(false)
         setCurrentQuestion(0)
         setFinalScore(0)
         setInnitialScore(0)
         console.log(category+difficulty+ammount);
-
-        let apiUrl = `https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&limit=${ammount}`;
-           
-        
-        if (ammount.length>1) {
-        apiUrl = apiUrl.concat(`&limit=${ammount}`)
-        }
-        if (category.length) {
-        apiUrl = apiUrl.concat(`&category=${category}`)
-        }
-        if (difficulty.length) {
-        apiUrl = apiUrl.concat(`&difficulty=${difficulty}`)
-        }
-
-        console.log(apiUrl);
-
-        await fetch(apiUrl)
-        .then((res) => res.json())
-        .then((response) => {
-            setGeneratedQuizz(response)
-            console.log(generatedQuizz);
-        });
 
         console.log(generatedQuizz);
                 
@@ -117,9 +100,10 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
 
             
     const submitAnswers = (event)=>{
-        setShowScore(false)
+
         event.preventDefault()
-        dispatch(newQuizActions.saveNewQuiz({
+        
+        dispatch(newAnswersActions.saveNewAnswers({
             quizz_name: data.quizz_name,
             difficulty: data.difficulty,
             score: data.score
@@ -128,7 +112,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
         console.log(data);
 
     }
-
+    
     return (
         <Grid container justifyContent="center">
             <Grid item marginTop="20px">

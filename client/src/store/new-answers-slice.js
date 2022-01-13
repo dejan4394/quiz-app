@@ -6,13 +6,13 @@ import axios from "axios";
 
 
 
-const newQuizSlice = createSlice({
-    name: 'new_quiz',
+const newAnswersSlice = createSlice({
+    name: 'new_answers',
     initialState: {
         newQuiz : null
     },
     reducers: {
-        saveNewQuiz( state, action ) {
+        saveNewAnswers( state, action ) {
             state.newQuiz = {
                 quizz_name : action.payload.quizz_name,
                 difficulty : action.payload.difficulty,
@@ -63,6 +63,6 @@ export const submitResult = ({newQuizData, tokenStr}) => {
 }
 //===============================================================================================
 
-export const newQuizActions = newQuizSlice.actions
+export const newAnswersActions = newAnswersSlice.actions
 
-export default newQuizSlice
+export default newAnswersSlice
