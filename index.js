@@ -30,6 +30,7 @@ app.use(
 //CONNECTION TO THE DATA BASE====
 
 const url = process.env.MONGODB_URI
+
 mongoose.connect(url, {useNewUrlParser: true})
 .then(()=>console.log("Connected to the Data Base"))
 .catch( err=> console.log(err))
@@ -52,9 +53,9 @@ app.use("/quizes", DeleteQuiz)
 
 
 // If in production...================
-if( process.env.NODE_ENV=== 'production' ) {
+if( process.env.NODE_ENV === 'production' ) {
   //Set static folder
-  app.use(express.static('client/build'))
+  app.use(express.static(path.join(__dirname, 'client', 'build')))
 
   app.get( '*', ( req, res ) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
