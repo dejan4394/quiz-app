@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import path from "node:path"
 import { dirname } from "node:path";
 
-const __dirname = dirname(__filename)
+
 
 const app = express()
  
@@ -57,10 +57,10 @@ app.use("/quizes", DeleteQuiz)
 // If in production...================
 if( process.env.NODE_ENV === 'production' ) {
   //Set static folder
-  app.use(express.static(path.join(__dirname, 'client', 'build')))
+  app.use(express.static(path.join(dirname('client/build'))))
 
   app.get( '*', ( req, res ) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    res.sendFile(path.join(dirname('client/build/index.html')))
   } )
 }
 
