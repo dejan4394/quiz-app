@@ -57,10 +57,10 @@ app.use("/quizes", DeleteQuiz)
 // If in production...================
 if( process.env.NODE_ENV === 'production' ) {
   //Set static folder
-  app.use(express.static(path.join(dirname('/client/build'))))
+  app.use(express.static(path.join(dirname('./client/build'))))
 
   app.get( '*', ( req, res ) => {
-    res.sendFile(path.join(dirname('/client/build/index.html')))
+    res.sendFile(path.join(dirname('./client/build/index.html')))
   } )
 }
 
