@@ -60,7 +60,7 @@ if( process.env.NODE_ENV === 'production' ) {
   app.use(express.static(path.join(dirname('./client/build'))))
 
   app.get( '*', ( req, res ) => {
-    res.sendFile(path.join(dirname('./client/build/index.html')))
+    res.sendFile(path.join('./client/build/index.html', {root: __dirname}))
   } )
 }
 
