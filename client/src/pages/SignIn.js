@@ -28,8 +28,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" to="https://mui.com/">
-        Your Website
+      <Link color="inherit" to="/categories">
+        Quizz App - Dejan
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
