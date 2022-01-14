@@ -6,12 +6,12 @@ import NavBar from "./components/NavBar.js"
 
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
-import HomePage from "./pages/HomePage";
 
 import { tokenActions } from "./store/token-slice.js";
 import { submitResult } from "./store/new-answers-slice"
 import BasicModal from "./components/Modal.js";
 
+const HomePage = React.lazy( () => import("./pages/HomePage") )
 const Profile = React.lazy( () => import("./pages/Profile") )
 const Categories = React.lazy( () => import("./pages/Categories"))
 const SignUp = React.lazy( () => import("./pages/SignUp") )
