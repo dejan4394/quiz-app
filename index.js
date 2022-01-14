@@ -6,9 +6,7 @@ import DeleteQuiz from "./routes/delete-quiz-route.js"
 import Cors from "cors";
 import session from "express-session";
 import passport from "./passport/index.js"
-import cookieParser from "cookie-parser";
 import path from "node:path"
-import { dirname } from "node:path";
 
 
 
@@ -17,11 +15,10 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
-app.use(cookieParser())
 app.use(express.static("./client/public"));
 app.use(
       session({
-        secret: "secretcode",
+        secret: process.env.JWT_SECRET,
         resave: false,
         saveUninitialized: false,
       })
