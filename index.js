@@ -7,6 +7,11 @@ import Cors from "cors";
 import session from "express-session";
 import passport from "./passport/index.js"
 import path from "node:path"
+import { fileURLToPath } from "node:url";
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 
@@ -57,7 +62,7 @@ if( process.env.NODE_ENV === 'production' ) {
   app.use(express.static('./client/build'))
 
   app.get( '*', ( req, res ) => {
-    res.sendFile(path.resolve('./client/build/index.html'))
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html' ))
   } )
 }
 

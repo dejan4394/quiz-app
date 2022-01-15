@@ -1,7 +1,12 @@
 import express from "express"
 import { MongoClient } from 'mongodb';
 import jwt_decode from "jwt-decode"
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { dirname } from "node:path";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router()
 
@@ -9,6 +14,7 @@ const router = express.Router()
 //===DELETE QUIZZ======================================================
 
 router.post("/delete", (req,res)=>{
+    console.log(__dirname);
     let token  = req.headers.authorization
     console.log(token);
     var decoded = jwt_decode(token);
