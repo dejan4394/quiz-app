@@ -18,7 +18,7 @@ export const fetchNewQuizz = ({ammount, category, difficulty})=>{
 
     console.log('sranje1');
                
-            let apiUrl = `https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&limit=${ammount}`;
+            let apiUrl = `https://quizapi.io/api/v1/questions?apiKey=BAfukmGyFOYC8hriMKiqE3sD1tIVSu9QuQgKOHFU&limit=${ammount}`;
             
             
             if (ammount.length>1) {
