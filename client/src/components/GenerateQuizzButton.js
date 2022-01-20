@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import { newAnswersActions } from '../store/new-answers-slice';
 import { fetchNewQuizz } from '../store/generate-new-quiz-slice';
+import { handleGivenAnswers } from '../store/handle-given-answers';
 
 
 const useStyles = makeStyles({
@@ -35,13 +36,15 @@ const useStyles = makeStyles({
   });
 
 
-export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
+export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
 
     const dispatch = useDispatch()
 
     const classes = useStyles()
 
-    
+
+    const givenAnswersArray = useSelector( state => state.new_answers.givenAnswersArray )
+    const generatedQuizzAnswers = useSelector( state => state.generated_quizz.generatedQuizzAnswers )
     const generatedQuizz = useSelector(state => state.generated_quizz.generatedQuizz)
     const [ currentQuestion, setCurrentQuestion ] = useState(0)
     const [ innitialScore, setInnitialScore ] = useState(0)
@@ -52,6 +55,8 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
         difficulty: String,
         score: String
     })
+
+    const [ chosenAnswersArray, setChosenAnswersArray ] = useState([])
     
 
 
@@ -67,35 +72,94 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
         console.log(category+difficulty+ammount);
 
         console.log(generatedQuizz);
-                
+        console.log(generatedQuizzAnswers); 
+        console.log(givenAnswersArray);
+
     }
 
     
 
-    const handleNextQuestion = (event)=>{
+    const handleAnswer = (event)=>{
        
-        const correctAnswer = event.target.name
-        const givenAnswer = event.target.id
+        const idx = event.target.id
+        const correctAnswersArray = generatedQuizzAnswers[currentQuestion]
+        const givenAnswer = event.target.name
+        console.log(correctAnswersArray);
+        console.log(givenAnswer);
 
-        const score = innitialScore + 1;
+        if(! chosenAnswersArray.includes(givenAnswer)){
+            setChosenAnswersArray(prev=>
+            [...prev, givenAnswer]
+        )
+        }else{
+            setChosenAnswersArray(
+                chosenAnswersArray.filter( (item) =>{ return item !== givenAnswer} )
+            )
+        }
+        
+        console.log(chosenAnswersArray);
 
-        givenAnswer === correctAnswer && setInnitialScore(score);
-        console.log(`Your score is: ${score}/${generatedQuizz.length}`)
+        // dispatch(handleGivenAnswers(chosenAnswersArray, currentQuestion, givenAnswersArray))
 
+
+        // const correctAnswer = event.target.name
+        // const givenAnswer = event.target.id
+
+        // const score = innitialScore + 1;
+
+        // givenAnswer === correctAnswer && setInnitialScore(score);
+        // console.log(`Your score is: ${score}/${generatedQuizz.length}`)
+
+        
+        //     setFinalScore(innitialScore+1);
+        //     // setShowScore(true)
+        //     setData({
+        //         quizz_name: generatedQuizz[0].category,
+        //         difficulty: generatedQuizz[0].difficulty,
+        //         score: `${score} /${generatedQuizz.length}` 
+        //     })
+        //     console.log(finalScore);
+            
+        
+    }
+
+    //===NAVIGATE THROUGH QUESTIONS=========================
+    const handleNext = () => {
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < generatedQuizz.length) {
-            setCurrentQuestion(nextQuestion);
-        } else {
-            setFinalScore(innitialScore+1);
-            setShowScore(true)
-            setData({
-                quizz_name: generatedQuizz[0].category,
-                difficulty: generatedQuizz[0].difficulty,
-                score: `${score} /${generatedQuizz.length}` 
-            })
-            console.log(finalScore);
             
+            console.log(currentQuestion);
+
+            console.log(chosenAnswersArray);
+
+            console.log(givenAnswersArray);
+
+            setCurrentQuestion(nextQuestion);
+
+            setChosenAnswersArray([])
         }
+        dispatch(handleGivenAnswers(chosenAnswersArray, givenAnswersArray[currentQuestion].id, givenAnswersArray))
+
+        console.log(givenAnswersArray);
+    }
+    const handlePrev = () => {
+        const nextQuestion = currentQuestion - 1;
+        if (nextQuestion >= 0) {
+            setCurrentQuestion(nextQuestion);
+            console.log(currentQuestion);
+            
+            console.log(givenAnswersArray);
+            console.log(givenAnswersArray[currentQuestion]);
+        }
+
+        
+    }
+    //=======================================================
+
+
+
+    const submit = () => {
+        setShowScore(true)
     }
 
             
@@ -125,20 +189,30 @@ export const GenerateQuizzButton = ({category, difficulty, ammount, token}) => {
                     </Grid>
                     
                     <Grid container justifyContent="center" display="flex" flexDirection="column">
-                        {Object.keys(generatedQuizz[currentQuestion].answers).map(item =>{
-                            const answer = generatedQuizz[currentQuestion].answers[item];
-                            if( answer !== null){
-                                return(<Grid item marginTop="21px">
+                        {Object.keys(generatedQuizz[currentQuestion].answers).map((item, idx) =>{
+                            
+                            const answerText = generatedQuizz[currentQuestion].answers[item];
+                            const answer = Object.keys(generatedQuizz[currentQuestion].correct_answers)[idx]
+
+                            if( answerText !== null){
+                                return(<Grid key={idx} item marginTop="21px">
                                             <Button 
+                                                
                                                 className={classes.answers}
-                                                name={generatedQuizz[currentQuestion].correct_answer} 
-                                                id={item} onClick={handleNextQuestion} 
+                                                name={answer} 
+                                                id={idx} 
+                                                onClick={handleAnswer} 
                                                 variant='contained'>
-                                            { answer }
+                                            { generatedQuizz[currentQuestion].id + '.  ' + answerText}
                                             </Button>
                                         </Grid>)}}
                         )}
                     </Grid> 
+                    <Grid container justifyContent="space-around" margin="20px">
+                        <Button variant='contained' onClick={handlePrev}>Prev</Button>
+                        <Button variant="outlined" onClick={submit}>Submit</Button>
+                        <Button variant='contained' onClick={handleNext}>Next</Button>
+                    </Grid>
                 </Grid>
                  : <Grid container justifyContent="center" display="flex" flexDirection="column">
                         <Grid container justifyContent="center">

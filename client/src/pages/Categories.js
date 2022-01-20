@@ -16,7 +16,7 @@ const Categories = ({token}) => {
 
 
 
-const Url = 'https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&limit=20'
+const Url = 'https://quizapi.io/api/v1/questions?apiKey=BAfukmGyFOYC8hriMKiqE3sD1tIVSu9QuQgKOHFU'
 
 const getQuizzesData = async()=>{
 

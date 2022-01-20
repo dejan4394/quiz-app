@@ -9,9 +9,13 @@ import axios from "axios";
 const newAnswersSlice = createSlice({
     name: 'new_answers',
     initialState: {
-        newQuiz : null
+        newQuiz : null,
+        givenAnswersArray: []
     },
     reducers: {
+        setGivenAnwersArray (state, action) {
+            state.givenAnswersArray = action.payload
+        },
         saveNewAnswers( state, action ) {
             state.newQuiz = {
                 quizz_name : action.payload.quizz_name,

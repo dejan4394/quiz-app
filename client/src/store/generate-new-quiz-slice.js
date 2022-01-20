@@ -1,6 +1,10 @@
 
 
 import { generatedQuizzActions } from "./set-generated-quizz";
+import { newAnswersActions } from "./new-answers-slice";
+import { createGivenAnswersArray } from "./handle-given-answers";
+
+import { setCorrectAnswers } from "./setOferredAnswers";
 
 
 export const fetchNewQuizz = ({ammount, category, difficulty})=>{
@@ -18,8 +22,7 @@ export const fetchNewQuizz = ({ammount, category, difficulty})=>{
 
     console.log('sranje1');
                
-            let apiUrl = `https://quizapi.io/api/v1/questions?apiKey=vVrNukhRrRlwAFZsUkwgRR7UxMyWWrswSowKyAFb&limit=${ammount}`;
-            
+            let apiUrl = `https://quizapi.io/api/v1/questions?apiKey=BAfukmGyFOYC8hriMKiqE3sD1tIVSu9QuQgKOHFU&limit=${ammount}`
             
             if (ammount.length>1) {
             apiUrl = apiUrl.concat(`&limit=${ammount}`)
@@ -42,9 +45,11 @@ export const fetchNewQuizz = ({ammount, category, difficulty})=>{
                 dispatch(generatedQuizzActions.setGeneratedQuizz({
                     generatedQuizz: response
                 }))
-                
-                // setGeneratedQuizz(response)
-                // console.log(generatedQuizz);
+
+                dispatch(setCorrectAnswers(response))
+
+                dispatch(createGivenAnswersArray(response))
+             
             });
 
         
