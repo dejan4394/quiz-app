@@ -59,6 +59,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     })
 
     const [ chosenAnswersArray, setChosenAnswersArray ] = useState([])
+    const [buttonClass, setButtonClass] = useState('contained')
     
 
 
@@ -89,14 +90,16 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         console.log(correctAnswersArray);
         console.log(givenAnswer);
 
-        if(! chosenAnswersArray.includes(givenAnswer)){
+        if( !chosenAnswersArray.includes(givenAnswer)){
             setChosenAnswersArray(prev=>
             [...prev, givenAnswer]
         )
+            setButtonClass("outlined")
         }else{
             setChosenAnswersArray(
                 chosenAnswersArray.filter( (item) =>{ return item !== givenAnswer} )
             )
+            setButtonClass("contained")
         }
         
         console.log(chosenAnswersArray);
@@ -219,7 +222,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
                                                 name={answer} 
                                                 id={idx} 
                                                 onClick={handleAnswer} 
-                                                variant='contained'>
+                                                variant={buttonClass}>
                                                     {answerText}
                                             </Button>
                                         </Grid>)}}
