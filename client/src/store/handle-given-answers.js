@@ -36,8 +36,8 @@ export const handleGivenAnswers = (chosenAnswersArray, idx, givenAnswersArray)=>
     return (dispatch) => {
     
         // console.log(givenAnswersArray);
-        console.log(chosenAnswersArray);
-        console.log(idx);
+        // console.log(chosenAnswersArray);
+        // console.log(idx);
 
         const elementsIndex = givenAnswersArray.findIndex(element => element.id == idx )
 

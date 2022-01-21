@@ -46,6 +46,8 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     const givenAnswersArray = useSelector( state => state.new_answers.givenAnswersArray )
     const generatedQuizzAnswers = useSelector( state => state.generated_quizz.generatedQuizzAnswers )
     const generatedQuizz = useSelector(state => state.generated_quizz.generatedQuizz)
+    const newQuiz = useSelector( state => state.new_answers.newQuiz )
+
     const [ currentQuestion, setCurrentQuestion ] = useState(0)
     const [ innitialScore, setInnitialScore ] = useState(0)
     const [ showScore, setShowScore ] = useState(false)
@@ -124,6 +126,8 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     }
 
     //===NAVIGATE THROUGH QUESTIONS=========================
+
+    //===NEXT QUESTION======================================
     const handleNext = () => {
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < generatedQuizz.length) {
@@ -131,38 +135,71 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
             console.log(currentQuestion);
 
             console.log(chosenAnswersArray);
-
-            console.log(givenAnswersArray);
+            console.log(givenAnswersArray[currentQuestion]);
 
             setCurrentQuestion(nextQuestion);
 
             setChosenAnswersArray([])
         }
+
         dispatch(handleGivenAnswers(chosenAnswersArray, givenAnswersArray[currentQuestion].id, givenAnswersArray))
 
-        console.log(givenAnswersArray);
     }
+
+    //===PREVIOUS QUESTION============================
     const handlePrev = () => {
         const nextQuestion = currentQuestion - 1;
         if (nextQuestion >= 0) {
             setCurrentQuestion(nextQuestion);
+            
             console.log(currentQuestion);
             
             console.log(givenAnswersArray);
             console.log(givenAnswersArray[currentQuestion]);
+
+            
+
+            setChosenAnswersArray([])
+
         }
 
-        
+        dispatch(handleGivenAnswers(chosenAnswersArray, givenAnswersArray[currentQuestion].id, givenAnswersArray))
+
+
     }
     //=======================================================
 
 
+    //===SUBMIT / CHECK SCORE================================
 
     const submit = () => {
+
+        console.log("CHECKING YOUR SCORE!!!");
+        
+        console.log(generatedQuizzAnswers);
+        console.log(givenAnswersArray);
+
+        const finalScore = givenAnswersArray.map( (item, idx) => item.answers.every( e => generatedQuizzAnswers[idx].answers.includes(e) ))
+        console.log(finalScore);
+
+        const trueAnswers = finalScore.filter( ans => ans === true ).length
+        console.log(trueAnswers);
+
+        setFinalScore(trueAnswers)
+        console.log(`Your score is: ${trueAnswers}/${generatedQuizz.length}`)
+
+        setData({
+                    quizz_name: generatedQuizz[0].category,
+                    difficulty: generatedQuizz[0].difficulty,
+                    score: `${trueAnswers} /${generatedQuizz.length}` 
+                })
+
         setShowScore(true)
     }
+    //=======================================================
 
-            
+
+    //===SUBMIT ANSWERS TO THE BACKEND=======================        
     const submitAnswers = (event)=>{
 
         event.preventDefault()
@@ -172,9 +209,9 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
             difficulty: data.difficulty,
             score: data.score
         }))
-
+        
         console.log(data);
-
+        console.log(newQuiz);
     }
     
     return (

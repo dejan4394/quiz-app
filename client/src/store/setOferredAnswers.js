@@ -1,32 +1,42 @@
-
-
 import { generatedQuizzActions } from "./set-generated-quizz";
+
+
 
 export const setCorrectAnswers = (generatedQuizz)=>{
 
-
     console.log('answers');
 
-return async (dispatch) => {
-  
+    return async (dispatch) => {
+    
 
-const correctAnswers = generatedQuizz.map( item =>
+    const correctAnswers = generatedQuizz.map( item =>
 
-            Object.keys(item.correct_answers).map((answer, idx) =>{
-                                    
-            const correct_answer = item.correct_answers[answer];
-            
-            if(correct_answer !== 'false')
-                return answer
-            
-        }
+                Object.keys(item.correct_answers).map((answers, idx) =>{
+                                        
+                const correct_answer = item.correct_answers[answers];
+                
+                if(correct_answer !== 'false')
+                    return {"id": item.id,
+                            "answers": [answers]
+                    }
+                
+            }
+            )
         )
-    )
 
-console.log(correctAnswers);
-dispatch(generatedQuizzActions.setGeneratedQuizzAnswers({
-    answers: correctAnswers
-}))
-        
-}    
+        const filteredCorrectAnswers = correctAnswers.map( item => {
+            const filterred =  item.filter( undefinedItem => undefinedItem !== undefined)
+            return filterred
+            }
+            )
+
+            const objectArray = filteredCorrectAnswers.map(arr => {return arr[0]})
+            console.log(objectArray);
+            
+
+            dispatch(generatedQuizzActions.setGeneratedQuizzAnswers({
+                answers: objectArray
+            }))
+            
+    }    
 }

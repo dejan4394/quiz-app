@@ -17,6 +17,7 @@ const newAnswersSlice = createSlice({
             state.givenAnswersArray = action.payload
         },
         saveNewAnswers( state, action ) {
+            console.log("jfoef");
             state.newQuiz = {
                 quizz_name : action.payload.quizz_name,
                 difficulty : action.payload.difficulty,
@@ -30,12 +31,14 @@ const newAnswersSlice = createSlice({
 //===REDUX THUNK/ SUBMI NEW RESULTS=================================================================================
 
 export const submitResult = ({newQuizData, tokenStr}) => {
+    console.log(newQuizData);
+
     return async (dispatch) => {
       
             const answers = await axios({
                   method: "post",
                   url: "/quizes",
-                  data:newQuizData.newQuiz,
+                  data:newQuizData,
                   headers: {  "Authorization" : `${tokenStr}`,
                               "Content-Type": "application/json",
                               'Access-Control-Allow-Origin': 'http://localhost:3000'
