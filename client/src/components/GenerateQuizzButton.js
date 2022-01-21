@@ -101,26 +101,6 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         
         console.log(chosenAnswersArray);
 
-        // dispatch(handleGivenAnswers(chosenAnswersArray, currentQuestion, givenAnswersArray))
-
-
-        // const correctAnswer = event.target.name
-        // const givenAnswer = event.target.id
-
-        // const score = innitialScore + 1;
-
-        // givenAnswer === correctAnswer && setInnitialScore(score);
-        // console.log(`Your score is: ${score}/${generatedQuizz.length}`)
-
-        
-        //     setFinalScore(innitialScore+1);
-        //     // setShowScore(true)
-        //     setData({
-        //         quizz_name: generatedQuizz[0].category,
-        //         difficulty: generatedQuizz[0].difficulty,
-        //         score: `${score} /${generatedQuizz.length}` 
-        //     })
-        //     console.log(finalScore);
             
         
     }
@@ -240,12 +220,12 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
                                                 id={idx} 
                                                 onClick={handleAnswer} 
                                                 variant='contained'>
-                                            { generatedQuizz[currentQuestion].id + '.  ' + answerText}
+                                                    {answerText}
                                             </Button>
                                         </Grid>)}}
                         )}
                     </Grid> 
-                    <Grid container justifyContent="space-around" margin="20px">
+                    <Grid container justifyContent="space-around" margin="20px 0px 20px 0px">
                         <Button variant='contained' onClick={handlePrev}>Prev</Button>
                         <Button variant="outlined" onClick={submit}>Submit</Button>
                         <Button variant='contained' onClick={handleNext}>Next</Button>
