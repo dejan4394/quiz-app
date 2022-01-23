@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { newAnswersActions } from '../store/new-answers-slice';
 import { fetchNewQuizz } from '../store/generate-new-quiz-slice';
 import { handleGivenAnswers } from '../store/handle-given-answers';
+import AnswerButton from './AnswerButton';
 
 
 const useStyles = makeStyles({
@@ -83,7 +84,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     
 
     const handleAnswer = (event)=>{
-       
+        console.log(event);
         const idx = event.target.id
         const correctAnswersArray = generatedQuizzAnswers[currentQuestion]
         const givenAnswer = event.target.name
@@ -196,6 +197,12 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         console.log(data);
         console.log(newQuiz);
     }
+
+
+    //===HANDLE CLASSES ON CLICK================
+    const handleClick = () => {
+        console.log('lajno golemo');
+    }
     
     return (
         <Grid container justifyContent="center">
@@ -216,15 +223,15 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
 
                             if( answerText !== null){
                                 return(<Grid key={idx} item marginTop="21px">
-                                            <Button 
-                                                
+                                            <AnswerButton 
                                                 className={classes.answers}
                                                 name={answer} 
                                                 id={idx} 
                                                 onClick={handleAnswer} 
-                                                variant={buttonClass}>
-                                                    {answerText}
-                                            </Button>
+                                                variant={buttonClass}
+                                                buttonText ={answerText}
+                                                >
+                                            </AnswerButton>
                                         </Grid>)}}
                         )}
                     </Grid> 
