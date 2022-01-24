@@ -9,18 +9,12 @@ import { setCorrectAnswers } from "./setOferredAnswers";
 
 export const fetchNewQuizz = ({ammount, category, difficulty})=>{
 
-        console.log('sranje');
+        console.log('GENERATING NEW QUIZZ!!!');
 
   return async (dispatch) => {
-      
-    // event.preventDefault()
-    // setShowScore(false)
-    // setCurrentQuestion(0)
-    // setFinalScore(0)
-    // setInnitialScore(0)
-    // console.log(category+difficulty+ammount);
+   
 
-    console.log('sranje1');
+    console.log('API ENDPOINT:');
                
             let apiUrl = `https://quizapi.io/api/v1/questions?apiKey=BAfukmGyFOYC8hriMKiqE3sD1tIVSu9QuQgKOHFU&limit=${ammount}`;
             
@@ -42,14 +36,17 @@ export const fetchNewQuizz = ({ammount, category, difficulty})=>{
             await fetch(apiUrl)
             .then((res)=> res.json())
             .then((response) => {
+                console.log('NEW QUIZZ QUESTIONS:');
                 console.log(response);
-                dispatch(generatedQuizzActions.setGeneratedQuizz({
-                    generatedQuizz: response
-                }))
+               
 
                 dispatch(setCorrectAnswers(response))
 
                 dispatch(createGivenAnswersArray(response))
+                
+                 dispatch(generatedQuizzActions.setGeneratedQuizz({
+                    generatedQuizz: response
+                }))
              
             });
 

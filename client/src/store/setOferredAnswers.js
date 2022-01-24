@@ -4,7 +4,6 @@ import { generatedQuizzActions } from "./set-generated-quizz";
 
 export const setCorrectAnswers = (generatedQuizz)=>{
 
-    console.log('answers');
 
     return async (dispatch) => {
     
@@ -30,6 +29,7 @@ export const setCorrectAnswers = (generatedQuizz)=>{
             }
             )
 
+            console.log('CORRECT ANSWERS ARRAY :');
             const objectArray = filteredCorrectAnswers.map(arr => {return arr[0]})
             console.log(objectArray);
             

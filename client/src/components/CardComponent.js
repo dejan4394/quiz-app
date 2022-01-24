@@ -8,7 +8,7 @@ import { makeStyles } from '@mui/styles';
 
 import { useDispatch } from 'react-redux';
 import { deleteQuiz } from '../store/delete-quiz-slice';
-import { serverResponseActions } from '../store/responses-from-server-slice';
+
 
 const useStyles = makeStyles({
     link: {

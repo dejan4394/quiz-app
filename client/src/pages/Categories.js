@@ -5,15 +5,13 @@ import axios from 'axios';
 import QuizzGenerator from '../components//QuizzGenerator.js';
 
 const Categories = ({token}) => {
-    console.log(token);
+    
     const [ quizzData, setQuizData ] = useState([])
     
     useEffect(() => {
         getQuizzesData()
         console.log(quizzData);
     }, [])
-
-
 
 
 const Url = 'https://quizapi.io/api/v1/questions?apiKey=BAfukmGyFOYC8hriMKiqE3sD1tIVSu9QuQgKOHFU'

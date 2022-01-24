@@ -1,7 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Button, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles';
-import axios from 'axios'
 
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +8,9 @@ import { newAnswersActions } from '../store/new-answers-slice';
 import { fetchNewQuizz } from '../store/generate-new-quiz-slice';
 import { handleGivenAnswers } from '../store/handle-given-answers';
 import AnswerButton from './AnswerButton';
+
+
+let isInitial = true
 
 
 const useStyles = makeStyles({
@@ -39,6 +41,9 @@ const useStyles = makeStyles({
 
 export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
 
+
+   
+
     const dispatch = useDispatch()
 
     const classes = useStyles()
@@ -47,10 +52,8 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     const givenAnswersArray = useSelector( state => state.new_answers.givenAnswersArray )
     const generatedQuizzAnswers = useSelector( state => state.generated_quizz.generatedQuizzAnswers )
     const generatedQuizz = useSelector(state => state.generated_quizz.generatedQuizz)
-    const newQuiz = useSelector( state => state.new_answers.newQuiz )
 
     const [ currentQuestion, setCurrentQuestion ] = useState(0)
-    const [ innitialScore, setInnitialScore ] = useState(0)
     const [ showScore, setShowScore ] = useState(false)
     const [ finalScore, setFinalScore ] = useState(0)
     const [ data, setData ] = useState({
@@ -60,10 +63,24 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     })
 
     const [ chosenAnswersArray, setChosenAnswersArray ] = useState([])
-    const [buttonClass, setButtonClass] = useState('contained')
+
     
+    //===REFRESH THE STATE OF THE GIVEN ANSWERS ARRAY=============================================================
+    useEffect(() => {
 
+        if(isInitial){
+          isInitial = false
+          return;
+        }
+    
+    
+        dispatch(handleGivenAnswers(chosenAnswersArray, givenAnswersArray[currentQuestion].id, givenAnswersArray))
+                
+      }, [chosenAnswersArray])
 
+    //============================================================================================================
+
+    //===GENERATE THE QUIZZ========================================
     const handleGenerate= (event)=>{
         event.preventDefault()
 
@@ -72,78 +89,54 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         setShowScore(false)
         setCurrentQuestion(0)
         setFinalScore(0)
-        setInnitialScore(0)
-        console.log(category+difficulty+ammount);
-
-        console.log(generatedQuizz);
-        console.log(generatedQuizzAnswers); 
-        console.log(givenAnswersArray);
-
+        
     }
 
     
-
+    //===HANDLE THE ANSWERS===============================================
     const handleAnswer = (event)=>{
-        console.log(event);
-        const idx = event.target.id
-        const correctAnswersArray = generatedQuizzAnswers[currentQuestion]
+
         const givenAnswer = event.target.name
-        console.log(correctAnswersArray);
-        console.log(givenAnswer);
 
         if( !chosenAnswersArray.includes(givenAnswer)){
             setChosenAnswersArray(prev=>
             [...prev, givenAnswer]
         )
-            setButtonClass("outlined")
         }else{
             setChosenAnswersArray(
                 chosenAnswersArray.filter( (item) =>{ return item !== givenAnswer} )
             )
-            setButtonClass("contained")
         }
         
-        console.log(chosenAnswersArray);
-
-            
-        
     }
+    //==============================================================================
 
-    //===NAVIGATE THROUGH QUESTIONS=========================
+
 
     //===NEXT QUESTION======================================
+
     const handleNext = () => {
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < generatedQuizz.length) {
-            
-            console.log(currentQuestion);
-
-            console.log(chosenAnswersArray);
-            console.log(givenAnswersArray[currentQuestion]);
 
             setCurrentQuestion(nextQuestion);
 
-            setChosenAnswersArray([])
+            setChosenAnswersArray(givenAnswersArray[currentQuestion+1].answers)
         }
 
         dispatch(handleGivenAnswers(chosenAnswersArray, givenAnswersArray[currentQuestion].id, givenAnswersArray))
-
+        // dispatch(setClickedAnswerActions.setClicked())
     }
 
+
     //===PREVIOUS QUESTION============================
+
     const handlePrev = () => {
         const nextQuestion = currentQuestion - 1;
         if (nextQuestion >= 0) {
             setCurrentQuestion(nextQuestion);
-            
-            console.log(currentQuestion);
-            
-            console.log(givenAnswersArray);
-            console.log(givenAnswersArray[currentQuestion]);
 
-            
-
-            setChosenAnswersArray([])
+            setChosenAnswersArray(givenAnswersArray[currentQuestion-1].answers)
 
         }
 
@@ -160,10 +153,13 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
 
         console.log("CHECKING YOUR SCORE!!!");
         
-        console.log(generatedQuizzAnswers);
-        console.log(givenAnswersArray);
 
-        const finalScore = givenAnswersArray.map( (item, idx) => item.answers.every( e => generatedQuizzAnswers[idx].answers.includes(e) ))
+        const finalScore = givenAnswersArray.map( (item, idx) =>{
+                if(item.answers.length > 0){
+                     if(item.answers.every( e => generatedQuizzAnswers[idx].answers.includes(e)))
+                     {return true}else{ return false }
+                }else{ return false }
+        })
         console.log(finalScore);
 
         const trueAnswers = finalScore.filter( ans => ans === true ).length
@@ -183,7 +179,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     //=======================================================
 
 
-    //===SUBMIT ANSWERS TO THE BACKEND=======================        
+    //===SEND ANSWERS TO THE BACKEND=======================        
     const submitAnswers = (event)=>{
 
         event.preventDefault()
@@ -194,15 +190,10 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
             score: data.score
         }))
         
-        console.log(data);
-        console.log(newQuiz);
+        console.log('GIVEN ANSWERS SAVED INTO REDUX!!!');
     }
 
 
-    //===HANDLE CLASSES ON CLICK================
-    const handleClick = () => {
-        console.log('lajno golemo');
-    }
     
     return (
         <Grid container justifyContent="center">
@@ -224,11 +215,12 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
                             if( answerText !== null){
                                 return(<Grid key={idx} item marginTop="21px">
                                             <AnswerButton 
-                                                className={classes.answers}
+                                                currentQuestion={currentQuestion}
+                                                
                                                 name={answer} 
                                                 id={idx} 
                                                 onClick={handleAnswer} 
-                                                variant={buttonClass}
+                                                
                                                 buttonText ={answerText}
                                                 >
                                             </AnswerButton>

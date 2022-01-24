@@ -8,9 +8,6 @@ import { useSelector } from 'react-redux'
 
 const QuizzGenerator = ({quizzData, token}) => {
 
-
-    const generatedQuizz = useSelector( state => state.generated_quizz.generatedQuizz )
-
     //Get Categories
     const filterredCategory = ()=>{
         const categories = quizzData.map( item=>item.category)
@@ -63,7 +60,7 @@ const QuizzGenerator = ({quizzData, token}) => {
 
     return (
         <Grid container display="flex" flexDirection="column">
-            {generatedQuizz.length === 0 && 
+           
             <Grid>
                 <Grid item marginTop="20px">
                     <SelectComponent label="category" queryArray={filterredCategory()} value={category} onChange={handleCategory}/>
@@ -74,7 +71,7 @@ const QuizzGenerator = ({quizzData, token}) => {
                 <Grid item marginTop="20px">
                     <SelectComponent label="Ammount of questions" queryArray={[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20]} value={ammount} onChange={handleAmmount}/>
                 </Grid> 
-            </Grid>}
+            </Grid>
             
             {quizzData && <GenerateQuizzButton category={category} difficulty={difficulty} ammount={ammount} token={token}/>}
         </Grid>

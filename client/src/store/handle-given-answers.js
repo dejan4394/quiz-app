@@ -5,7 +5,7 @@ import { newAnswersActions } from "./new-answers-slice";
 export const createGivenAnswersArray = (response)=>{
 
 
-            console.log('create-given-answers');
+            console.log('CREATING GIVEN ANSWERS ARRAY!!!');
 
         return async (dispatch) => {
         
@@ -16,7 +16,8 @@ export const createGivenAnswersArray = (response)=>{
                     }
             })
 
-         console.log(emptyArray);
+            console.log('GIVEN ANSWERS ARRAY :');
+            console.log(emptyArray);
          
          dispatch(newAnswersActions.setGivenAnwersArray(
             emptyArray
@@ -30,22 +31,18 @@ export const createGivenAnswersArray = (response)=>{
 
 export const handleGivenAnswers = (chosenAnswersArray, idx, givenAnswersArray)=>{
 
-    console.log('handle-given-answers');
+    console.log('UPDATING GIVEN ANSWERS ARRAY!!!');
 
 
     return (dispatch) => {
-    
-        // console.log(givenAnswersArray);
-        // console.log(chosenAnswersArray);
-        // console.log(idx);
 
         const elementsIndex = givenAnswersArray.findIndex(element => element.id == idx )
-
 
         const newArray = [...givenAnswersArray]
 
         newArray[elementsIndex] = {...newArray[elementsIndex], answers: chosenAnswersArray}
 
+        console.log('UPDATED ANSWERS ARRAY : ');
         console.log(newArray);
 
         dispatch(newAnswersActions.setGivenAnwersArray(

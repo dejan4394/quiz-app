@@ -48,11 +48,7 @@ export const getUserData = ({ token, setUserData, setResponseFromServer }) => {
               dispatch(serverResponseActions.messageFromServer({
                 message: 'Welcome!!!'
             }))
-              // dispatch(uiActions.setModal({
-              //   show: true,
-              //   displayFirstButton : 'none',
-              //   displaySecondButton: 'none'
-              // }))
+              
               setTimeout(
                 ()=>{dispatch(uiActions.setModal({
                 show: false,

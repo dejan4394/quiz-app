@@ -9,16 +9,16 @@ import axios from "axios";
 const newAnswersSlice = createSlice({
     name: 'new_answers',
     initialState: {
-        newQuiz : null,
-        givenAnswersArray: []
+        givenAnswersArray: [],
+        newQuizGivenAnswers : null
     },
     reducers: {
         setGivenAnwersArray (state, action) {
             state.givenAnswersArray = action.payload
         },
         saveNewAnswers( state, action ) {
-            console.log("jfoef");
-            state.newQuiz = {
+            console.log("SAVING GIVEN ANSWERS INTO REDUX-STATE!!!");
+            state.newQuizGivenAnswers = {
                 quizz_name : action.payload.quizz_name,
                 difficulty : action.payload.difficulty,
                 score : action.payload.score
