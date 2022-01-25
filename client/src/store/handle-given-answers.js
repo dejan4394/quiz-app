@@ -31,8 +31,6 @@ export const createGivenAnswersArray = (response)=>{
 
 export const handleGivenAnswers = (chosenAnswersArray, idx, givenAnswersArray)=>{
 
-    console.log('UPDATING GIVEN ANSWERS ARRAY!!!');
-
 
     return (dispatch) => {
 

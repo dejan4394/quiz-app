@@ -31,7 +31,9 @@ const useStyles = makeStyles({
     },
     card: {
         border: " 2px solid grey",
-        margin: "20px" 
+        // margin: "0px",
+        padding: "0px",
+        height: "max-content"
     }
   });
 

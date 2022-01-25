@@ -38,7 +38,7 @@ const HomePage = () => {
     const classes = useStyles()
         
     return (
-        <Grid className={classes.container_background} container justifyContent="center" alignItems="center" height="100vh" maxWidth="md" bacground="blue">
+        <Grid className={classes.container_background} container justifyContent="center" alignItems="center" height="100vh">
             <Grid className={classes.heading} justifyContent="center" alignItems="center" marginBottom="200px" container xs={8} >
                 <Grid item padding="80px"> 
                     <Typography className={classes.heading_text} variant='h5'>

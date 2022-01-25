@@ -14,35 +14,33 @@ let isInitial = true
 
 
 const useStyles = makeStyles({
-    link: {
-      color: 'white',
-      textDecoration: "none"
-    },
-    link_menu: {
-      textDecoration: "none"
-    },
     heading:{
         border:"2px solid #2196f3",
         borderRadius: "5px",
         backgroundColor: "#e3f2fd",
         padding: "30px"
     },
-    container_background:{
-        backgroundColor: "#cfd8dc"
-    },
     button:{
         marginBottom: "20px"
     },
     answers:{
         width:"fill-available"
+    },
+    question_info: {
+        background: "#2e91d1",
+        marginBottom: "10px",
+        padding: "0px 10px"
+    },
+    quizz_container: {
+        background: "#EBEDED",
+        padding: "10px",
+        borderRadius: "5px",
+        border: "2px solid dodgerblue",
     }
   });
 
 
 export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
-
-
-   
 
     const dispatch = useDispatch()
 
@@ -67,13 +65,14 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     
     //===REFRESH THE STATE OF THE GIVEN ANSWERS ARRAY=============================================================
     useEffect(() => {
+        console.log(givenAnswersArray);
 
         if(isInitial){
           isInitial = false
           return;
         }
     
-    
+        if( givenAnswersArray.length > 0 )  
         dispatch(handleGivenAnswers(chosenAnswersArray, givenAnswersArray[currentQuestion].id, givenAnswersArray))
                 
       }, [chosenAnswersArray])
@@ -157,12 +156,12 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         const finalScore = givenAnswersArray.map( (item, idx) =>{
                 if(item.answers.length > 0){
                      if(item.answers.every( e => generatedQuizzAnswers[idx].answers.includes(e)))
-                     {return true}else{ return false }
-                }else{ return false }
+                     {return 'true'}else{ return 'false' }
+                }else{ return 'false' }
         })
         console.log(finalScore);
 
-        const trueAnswers = finalScore.filter( ans => ans === true ).length
+        const trueAnswers = finalScore.filter( ans => ans === 'true' ).length
         console.log(trueAnswers);
 
         setFinalScore(trueAnswers)
@@ -201,7 +200,18 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
                 <Button className={classes.button} variant='contained' onClick={handleGenerate}>generate quizz</Button>
             </Grid>
                 {!showScore ? generatedQuizz.length > 0 &&
-                <Grid container justifyContent="center" display="flex" flexDirection="column">
+                <Grid className={classes.quizz_container} container justifyContent="center" display="flex" flexDirection="column">
+                    <Grid className={classes.question_info} container display="flex" justifyContent="space-between">
+                        <Typography>
+                            {`Difficulty : ${generatedQuizz[0].difficulty}`}
+                        </Typography>
+                        <Typography>
+                            {`Category : ${generatedQuizz[0].category}`}
+                        </Typography>
+                        <Typography>
+                            {`Question : ${currentQuestion + 1} / ${generatedQuizz.length}`}
+                        </Typography>
+                    </Grid>
                     <Grid className={classes.heading} container justifyContent="center" >
                         <Typography>{generatedQuizz[currentQuestion].question}</Typography>
                     </Grid>
@@ -216,11 +226,9 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
                                 return(<Grid key={idx} item marginTop="21px">
                                             <AnswerButton 
                                                 currentQuestion={currentQuestion}
-                                                
                                                 name={answer} 
                                                 id={idx} 
                                                 onClick={handleAnswer} 
-                                                
                                                 buttonText ={answerText}
                                                 >
                                             </AnswerButton>
@@ -233,7 +241,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
                         <Button variant='contained' onClick={handleNext}>Next</Button>
                     </Grid>
                 </Grid>
-                 : <Grid container justifyContent="center" display="flex" flexDirection="column">
+                 : <Grid className={classes.quizz_container} container justifyContent="center" display="flex" flexDirection="column">
                         <Grid container justifyContent="center">
                             <Typography padding="70px">{`Your score is: ${finalScore}/${generatedQuizz.length}`}</Typography>
                         </Grid>

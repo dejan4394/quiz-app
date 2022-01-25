@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { serverResponseActions } from "../store/responses-from-server-slice"
 import { uiActions } from '../store/ui-slice.js';
 import { getUserData } from '../store/profile-actions.js';
+import { height } from '@mui/system';
 
 //===CSS==========================================
 const useStyles = makeStyles({
@@ -32,14 +33,24 @@ const useStyles = makeStyles({
       backgroundColor: "#e3f2fd",
       padding: "30px"
   },
-  container_background:{
-      backgroundColor: "#cfd8dc"
-  },
   button:{
       marginBottom: "20px"
   },
-  answers:{
-      width:"fill-available"
+  quizz_container: {
+    background: "#EBEDED",
+    padding: "10px",
+    // borderRadius: "0 0 5px 5px",
+    // border: "2px solid dodgerblue",
+  },
+  completed_quizes: {
+    background: "gray",
+    margin: "0px"
+  },
+  card_container: {
+    display: "flex",
+    justifyContent: "center",
+    padding: "0px",
+    height: "100vh"
   }
 });
 //===================================================
@@ -71,7 +82,7 @@ const changed = useSelector( state => state.profile_data.changed )
 
     return (
       <Grid container display="flex" flexDirection="row">
-        <Grid item md={4} sm={12} xs={12} minHeight={{md:"100vh", sm:"40vh"}} backgroundColor="gray">
+        <Grid className={classes.quizz_container} item md={4} sm={12} xs={12} minHeight={{md:"100vh", sm:"40vh"}} backgroundColor="gray">
         
         {userData &&
           <Box padding="20px">
@@ -90,7 +101,7 @@ const changed = useSelector( state => state.profile_data.changed )
           {showProgress ? 
         <Progress/> :
         <Grid container justifyContent='center'>
-          <Grid container justifyContent="center">
+          <Grid backgroundColor="darkturquoise" container justifyContent="center">
             <WarningMsg message={responseFromServer}/>
           </Grid>
         
@@ -100,9 +111,9 @@ const changed = useSelector( state => state.profile_data.changed )
             <Button className={classes.button} variant='contained'>Get Started</Button>
           </Link>
           </Grid>:
-          <Grid container display="flex" wrap="wrap" spacing={2} justifyContent="center">
+          <Grid className={classes.completed_quizes} container display="flex" wrap="wrap" spacing={2} justifyContent="center">
                   {completed.length > 0 ? completed.map((item, idx)=>{
-                            return <Grid key={idx} item display="flex" md={6}> 
+                            return <Grid className={classes.card_container} key={idx} item display="flex" md={6}> 
                                     <CardComponent token={token} category={item.quiz_name} score={item.score} id={idx}/>
                                   </Grid>
                         }) : 

@@ -25,7 +25,7 @@ function App() {
 
   const dispatch = useDispatch()
 
-  const newQuizData = useSelector( state => state.new_answers.newQuiz )
+  const newQuizData = useSelector( state => state.new_answers.newQuizGivenAnswers )
 
   const tokenStr = useSelector( state=> state.token.token_string )
 
