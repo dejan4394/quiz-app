@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import history from "../history"
-import { useNavigate } from 'react-router';
+import HomeIcon from '@mui/icons-material/Home';
 
 import { useDispatch } from 'react-redux';
 import { tokenActions } from '../store/token-slice';
@@ -68,18 +68,16 @@ const ResponsiveAppBar = ({token}) => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        <Link to="/" className={classes.link}>
-          <Typography
+        <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
-            LOGO
-          </Typography>
-        </Link>
-          
-
+            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+            >
+            <Link className={classes.link} to="/">
+              <HomeIcon/>
+            </Link>
+            </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -116,7 +114,7 @@ const ResponsiveAppBar = ({token}) => {
                   <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>Contact</Link></Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link to="/categories" className={classes.menu_link}>About</Link></Typography>
+                  <Typography textAlign="center"><Link to="/about" className={classes.menu_link}>About</Link></Typography>
                 </MenuItem>
              
             </Menu>
@@ -129,7 +127,7 @@ const ResponsiveAppBar = ({token}) => {
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
             >
             <Link className={classes.link} to="/">
-              LOGO
+              <HomeIcon/>
             </Link>
             </Typography>
           
@@ -138,7 +136,7 @@ const ResponsiveAppBar = ({token}) => {
             </Box>
             {!token &&
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:"flex-end" }}>
-              <Link to="/categories" className={classes.link}>
+              
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
@@ -147,23 +145,27 @@ const ResponsiveAppBar = ({token}) => {
                GET STARTED
                </Link>
               </Button>
-            </Link>
-            <Link to="/about" className={classes.link}>
+          
+            
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                ABOUT
+                  <Link to="/about" className={classes.link}>
+                  ABOUT
+                  </Link>
               </Button>
-            </Link>
-            <Link to="/contact" className={classes.link}>
+            
+            
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
+                <Link to="/contact" className={classes.link}>
                 CONTACT
+                </Link>
               </Button>
-            </Link>
+            
             </Box>}
           { token &&
           <Box sx={{ flexGrow: 0 }}>

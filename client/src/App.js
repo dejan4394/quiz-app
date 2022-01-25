@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { tokenActions } from "./store/token-slice.js";
 import { submitResult } from "./store/new-answers-slice"
 import BasicModal from "./components/Modal.js";
+import About from "./pages/About.js";
 
 const HomePage = React.lazy( () => import("./pages/HomePage") )
 const Profile = React.lazy( () => import("./pages/Profile") )
@@ -62,6 +63,7 @@ function App() {
               <Route exact path="/login" element={<SignIn />}/>  
               <Route exact path="/signup" element={<SignUp />}/>  
               <Route exact path="/profile" element={<Profile token={tokenStr}/>}/>  
+              <Route exact path="/cards" element={<About />}/> 
             </Routes>  
   
     </Suspense>

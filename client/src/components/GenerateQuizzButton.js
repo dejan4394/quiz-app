@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     },
     quizz_container: {
         background: "#EBEDED",
-        padding: "10px",
+        padding: "50px",
         borderRadius: "5px",
         border: "2px solid dodgerblue",
     }

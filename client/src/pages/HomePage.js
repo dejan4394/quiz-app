@@ -2,7 +2,7 @@ import { Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { makeStyles } from '@mui/styles'
 import {Link} from "react-router-dom"
-import Image from "../images/background.png"
+import Image from "../images/backGround.jpeg"
 
 const useStyles = makeStyles({
     link: {
@@ -24,7 +24,8 @@ const useStyles = makeStyles({
         fontFamily: "sans-serif"
     },
     container_background:{
-        backgroundImage: `url(${Image})`
+        backgroundImage: `url(${Image})`,
+        height: "100vh"
     },
     button:{
         marginBottom: "20px",
@@ -39,7 +40,7 @@ const HomePage = () => {
         
     return (
         <Grid className={classes.container_background} container justifyContent="center" alignItems="center" height="100vh">
-            <Grid className={classes.heading} justifyContent="center" alignItems="center" marginBottom="200px" container xs={8} >
+            <Grid className={classes.heading} justifyContent="center" alignItems="center" container xs={8} >
                 <Grid item padding="80px"> 
                     <Typography className={classes.heading_text} variant='h5'>
                         CHECK YOUR KNOWLEDGE
