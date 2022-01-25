@@ -53,5 +53,6 @@
     "url": "https://github.com/dejan4394/quiz-app/issues"
   },
   "homepage": "https://github.com/dejan4394/quiz-app#readme",
-  "description": ""
+  "description": "",
+  "optionalDependencies": { "fsevents": "2.1.2" }
 }
