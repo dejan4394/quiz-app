@@ -11,29 +11,12 @@ import { deleteQuiz } from '../store/delete-quiz-slice';
 
 
 const useStyles = makeStyles({
-    link: {
-      color: 'white',
-      textDecoration: "none"
-    },
-    link_menu: {
-      textDecoration: "none"
-    },
-    heading:{
-        border:"2px solid #2196f3",
-        borderRadius: "5px",
-        backgroundColor: "#e3f2fd"
-    },
-    container_background:{
-        backgroundColor: "#cfd8dc"
-    },
-    button:{
-        marginBottom: "20px"
-    },
     card: {
         border: " 2px solid grey",
-        // margin: "0px",
         padding: "0px",
-        height: "max-content"
+        height: "max-content",
+        weight: "200px"
+        
     }
   });
 
@@ -55,7 +38,7 @@ export default function CardComponent({token, category, score, id, grade}) {
     }
 
   return (
-    <Card sx={{ minWidth: 220 }} className={classes.card} >
+    <Card className={classes.card} sx={{ minWidth: 250 }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Category

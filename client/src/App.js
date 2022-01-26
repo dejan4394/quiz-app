@@ -2,6 +2,8 @@ import React, { Suspense } from "react";
 
 import { Route, Routes} from "react-router-dom"
 import { Container } from "@mui/material";
+import { makeStyles } from '@mui/styles';
+
 import NavBar from "./components/NavBar.js"
 
 import { useEffect } from "react";
@@ -20,9 +22,16 @@ const SignIn = React.lazy( () => import("./pages/SignIn") )
 
 let isInitial = true
 
+const useStyles = makeStyles({
+  container: {
+      padding: "unset",
+  }
+});
 
 function App() {
   
+  const classes = useStyles()
+
 
   const dispatch = useDispatch()
 
@@ -52,7 +61,7 @@ function App() {
   }, [newQuizData])
 
   return (
-    <Container >
+    <Container className={classes.container} disableGutters={true}>
     <Suspense fallback={<BasicModal/>}>
     
     {modal && <BasicModal/>}

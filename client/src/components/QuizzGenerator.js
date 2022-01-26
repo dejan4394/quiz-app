@@ -9,6 +9,10 @@ const useStyles = makeStyles({
     container: {
         backgroundColor: "gray",
         padding: "60px"
+    },
+    heading: {
+        textAlign: "center",
+        padding: "0px 20px 0px 20px"
     }
   });
 
@@ -71,7 +75,7 @@ const QuizzGenerator = ({quizzData, token}) => {
 
     return (
         <Grid container display="flex" flexDirection="column" justifyContent="center">
-            <Grid container justifyContent="center" paddingTop="40px">
+            <Grid className={classes.heading} container justifyContent="center" paddingTop="40px">
                 <Typography variant='h5' color="white">SELECT CATEGORY, DIFFICULTY, NR OF QUESTIONS</Typography>
             </Grid>
             <Grid className={classes.container}>

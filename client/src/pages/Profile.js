@@ -45,18 +45,16 @@ const useStyles = makeStyles({
     justifyContent: "space-evenly",
     justifyItems: "space-around",
     alignContent: "flex-start",
-    background: "gray",
     margin: "0px",
     minHeight: "100vh",
     padding: "30px"
   },
   card_container: {
-    marginTop: "20px",
     display: "flex",
     justifyContent: "center",
     padding: "0px",
     height: "fit-content",
-    maxWidth: "fit-content"
+    
   }
 });
 //===================================================
