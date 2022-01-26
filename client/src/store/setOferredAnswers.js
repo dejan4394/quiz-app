@@ -32,8 +32,9 @@ export const setCorrectAnswers = (generatedQuizz)=>{
             console.log('CORRECT ANSWERS ARRAY :');
             const objectArray = filteredCorrectAnswers.map(arr => {return arr[0]})
             console.log(objectArray);
+            const answersArray = objectArray.map( obj => obj.answers )
+            console.log(answersArray);
             
-
             dispatch(generatedQuizzActions.setGeneratedQuizzAnswers({
                 answers: objectArray
             }))

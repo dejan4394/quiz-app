@@ -2,7 +2,7 @@ import { Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { makeStyles } from '@mui/styles'
 import {Link} from "react-router-dom"
-import Image from "../images/backGround.jpeg"
+import Image from "../images/background.png"
 
 const useStyles = makeStyles({
     link: {
@@ -13,10 +13,8 @@ const useStyles = makeStyles({
       textDecoration: "none"
     },
     heading:{
-        border:"2px solid #2196f3",
-        borderRadius: "5px",
         backgroundColor: "#e3f2fd",
-        opacity: 0.8,
+        opacity: 0.4,
         '&:hover':{opacity: 1 }
 
     },
@@ -24,6 +22,7 @@ const useStyles = makeStyles({
         fontFamily: "sans-serif"
     },
     container_background:{
+        backgroundColor: "black",
         backgroundImage: `url(${Image})`,
         height: "100vh"
     },
@@ -40,12 +39,14 @@ const HomePage = () => {
         
     return (
         <Grid className={classes.container_background} container justifyContent="center" alignItems="center" height="100vh">
-            <Grid className={classes.heading} justifyContent="center" alignItems="center" container xs={8} >
-                <Grid item padding="80px"> 
+            <Grid container className={classes.heading} justifyContent="center" alignItems="center" >
+                
+                <Grid container padding="80px" justifyContent="center"> 
                     <Typography className={classes.heading_text} variant='h5'>
                         CHECK YOUR KNOWLEDGE
                     </Typography>
                 </Grid>
+               
                 <Grid item className={classes.button}>
                     <Link className={classes.link} to="/categories">
                      <Button variant='contained'>START YOUR QUIZZ</Button>

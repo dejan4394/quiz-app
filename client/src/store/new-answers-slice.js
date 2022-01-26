@@ -21,7 +21,8 @@ const newAnswersSlice = createSlice({
             state.newQuizGivenAnswers = {
                 quizz_name : action.payload.quizz_name,
                 difficulty : action.payload.difficulty,
-                score : action.payload.score
+                score : action.payload.score,
+                grade : action.payload.grade
         }
         }
     }

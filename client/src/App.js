@@ -52,7 +52,7 @@ function App() {
   }, [newQuizData])
 
   return (
-    <Container maxWidth="md">
+    <Container >
     <Suspense fallback={<BasicModal/>}>
     
     {modal && <BasicModal/>}

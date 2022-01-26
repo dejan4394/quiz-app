@@ -47,7 +47,6 @@ export default function SignIn({setToken}) {
   const dispatch = useDispatch()
   const navigate = useNavigate();
  
-
   const [ showProgres, setShowProgres ] = useState(false)
   const [ responseFromServer, setResponseFromServer ] = useState("")
   const [ user, setUser ] = useState({
@@ -56,6 +55,7 @@ export default function SignIn({setToken}) {
   })
 
 
+  //===HANDLE USER INFO==================================================
   const handleChange = (e)=>{
     const{value, name }= e.target
     setUser((prev)=>(
@@ -66,11 +66,13 @@ export default function SignIn({setToken}) {
       }))
   }
 
+  //===SEND POST REQUEST TO THE SERVER WITH THE USER CREDENTIALS==========
+
   const handleSubmit = (event) => {
+
     event.preventDefault()
     console.log(user);
 
-  
     axios({
         method: "post",
         url: "/users/login",
@@ -104,7 +106,7 @@ export default function SignIn({setToken}) {
                 setTimeout(() => {
                   setShowProgres(false)
                   navigate("/profile")
-                }, 1000);
+                }, 500);
                 
         }})
         .catch((err) => {

@@ -38,7 +38,8 @@ router.post("/", (req,res)=>{
                     const newSubmitedResults = {
                             quiz_name: req.body.quizz_name,
                             difficulty: req.body.difficulty,
-                            score: req.body.score 
+                            score: req.body.score,
+                            grade: req.body.grade 
                     }
                 dataBase.collection("users").updateOne({
                     user: decodedToken

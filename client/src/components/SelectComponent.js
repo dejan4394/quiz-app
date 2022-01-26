@@ -22,9 +22,10 @@ export default function BasicSelect({label, queryArray, onChange, value}) {
         >
          {queryArray &&
               queryArray.map((item, idx) => (
-                <MenuItem value={item} key={idx}>{item}</MenuItem>
+                <MenuItem value={item} key={idx}>
+                   {item} 
+                </MenuItem>
               ))}
-         
         </Select>
       </FormControl>
     </Box>

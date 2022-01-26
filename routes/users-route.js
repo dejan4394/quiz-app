@@ -14,9 +14,11 @@ const router = express.Router()
 //==SIGN-UP ROUTE==========================================================
 
 router.post("/signup", (req,res)=>{
+
     const user = req.body.username
     console.log(user);
     console.log('Request sent to the Server');
+
     MongoClient.connect(process.env.MONGODB_URI, async(err, db) => {
             if (err)
                 throw err;
@@ -34,29 +36,30 @@ router.post("/signup", (req,res)=>{
                     const payload = { user: user }
                     console.log(payload);
         
-                    const token = jsonwebtoken.sign(payload, config.JWTSecret)
-                        const newUserData = new User({
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        user: user,
-                        password: hashedPassword,
-                    })
+                    // const token = jsonwebtoken.sign(payload, config.JWTSecret)
+
+                    const newUserData = new User({
+                                                    firstName: req.body.firstName,
+                                                    lastName: req.body.lastName,
+                                                    user: user,
+                                                    password: hashedPassword,
+                                                })
                     newUserData.save()
                     console.log("Sign Up Successfull!!!!!!");
                     
-                        // res.send("Successfully Signed!!!")
+                    
                         return res.status(200).json({
                             success: true,
                             user,
-                            token,
+                            // token,
                             message: 'Sign Up Successfull!!!'})
-                    db.close()
+                    
                 }
                 else {
                     console.log("user already exists!!!!!!!!!!!!!!!!!");
                     return res.status(200).json({
                         success: false,
-                        message: 'User already exist!!!!!!!!!!!!!!!!'})    
+                        message: "User already exist!!!!!!!!!!!!!!!!!"})    
             }
             });
         });
@@ -67,7 +70,6 @@ router.post("/signup", (req,res)=>{
 
 //====LOGIN ROUTE===============================================================
 
-
 router.post("/login", (req, res, next) => {
     
     console.log("Received  User Credentials");
@@ -76,30 +78,33 @@ router.post("/login", (req, res, next) => {
         
       if (err) throw err;
       if (!user){
-          return res.status(200).json({
-                success: false,
-                message: 'Incorect email or password!!!',
-            })
-};
+            return res.status(200).json({
+                    success: false,
+                    message: 'Incorect email or password!!!',
+                    })
+                };
         req.logIn(user, (err) => {
           if (err) throw err;
+
                 const payload = { user: user.user }
+
                 console.log(payload);
                 console.log("passed strategy");
+
                 const token = jsonwebtoken.sign(payload, config.JWTSecret, {
                     expiresIn: EXPIRES_IN_MINUTES,
                 })
 
                 user.password = undefined
-                console.log("User authenticated!");
+                console.log("User authenticated!!!!!!");
+                
                 return res.status(200).json({
                     success: true,
                     user,
                     token,
-                    message: 'User authenticated!',
+                    message: "User authenticated!!!!!!"
                 })
       
-
         });
       
     })(req, res, next);

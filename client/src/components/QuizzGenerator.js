@@ -1,12 +1,23 @@
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import SelectComponent from "./SelectComponent.js"
 import { GenerateQuizzButton } from './GenerateQuizzButton.js'
+import { makeStyles } from '@mui/styles';
 
-import { useSelector } from 'react-redux'
+
+const useStyles = makeStyles({
+    container: {
+        backgroundColor: "gray",
+        padding: "60px"
+    }
+  });
+
 
 
 const QuizzGenerator = ({quizzData, token}) => {
+
+    const classes = useStyles()
+
 
     //Get Categories
     const filterredCategory = ()=>{
@@ -59,9 +70,11 @@ const QuizzGenerator = ({quizzData, token}) => {
     
 
     return (
-        <Grid container display="flex" flexDirection="column">
-           
-            <Grid>
+        <Grid container display="flex" flexDirection="column" justifyContent="center">
+            <Grid container justifyContent="center" paddingTop="40px">
+                <Typography variant='h5' color="white">SELECT CATEGORY, DIFFICULTY, NR OF QUESTIONS</Typography>
+            </Grid>
+            <Grid className={classes.container}>
                 <Grid item marginTop="20px">
                     <SelectComponent label="category" queryArray={filterredCategory()} value={category} onChange={handleCategory}/>
                 </Grid> 

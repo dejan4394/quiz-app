@@ -36,6 +36,7 @@ export const fetchNewQuizz = ({ammount, category, difficulty})=>{
             await fetch(apiUrl)
             .then((res)=> res.json())
             .then((response) => {
+                
                 console.log('NEW QUIZZ QUESTIONS:');
                 console.log(response);
                
@@ -44,7 +45,7 @@ export const fetchNewQuizz = ({ammount, category, difficulty})=>{
 
                 dispatch(createGivenAnswersArray(response))
                 
-                 dispatch(generatedQuizzActions.setGeneratedQuizz({
+                dispatch(generatedQuizzActions.setGeneratedQuizz({
                     generatedQuizz: response
                 }))
              

@@ -3,8 +3,22 @@ import { Grid } from '@mui/material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import QuizzGenerator from '../components//QuizzGenerator.js';
+import { makeStyles } from '@mui/styles';
+
+
+const useStyles = makeStyles({
+    container: {
+        backgroundColor: "gray"
+    }
+  });
+
+
+
 
 const Categories = ({token}) => {
+
+
+    const classes = useStyles()
     
     const [ quizzData, setQuizData ] = useState([])
     
@@ -28,7 +42,7 @@ const getQuizzesData = async()=>{
                 })
             }
 
-    return (<Grid container display="flex" flexDirection="column">
+    return (<Grid className={classes.container} container display="flex" flexDirection="column">
                 <QuizzGenerator quizzData={quizzData} token={token}/>
             </Grid>     
     )

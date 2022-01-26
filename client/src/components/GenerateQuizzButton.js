@@ -27,14 +27,15 @@ const useStyles = makeStyles({
         width:"fill-available"
     },
     question_info: {
+        borderRadius: "5px",
         background: "#2e91d1",
         marginBottom: "10px",
         padding: "0px 10px"
     },
     quizz_container: {
-        background: "#EBEDED",
+        background: "white",
         padding: "50px",
-        borderRadius: "5px",
+        
         border: "2px solid dodgerblue",
     }
   });
@@ -57,7 +58,8 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     const [ data, setData ] = useState({
         quizz_name: String,
         difficulty: String,
-        score: String
+        score: String,
+        grade: String
     })
 
     const [ chosenAnswersArray, setChosenAnswersArray ] = useState([])
@@ -65,7 +67,6 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     
     //===REFRESH THE STATE OF THE GIVEN ANSWERS ARRAY=============================================================
     useEffect(() => {
-        console.log(givenAnswersArray);
 
         if(isInitial){
           isInitial = false
@@ -88,6 +89,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         setShowScore(false)
         setCurrentQuestion(0)
         setFinalScore(0)
+        setChosenAnswersArray([])
         
     }
 
@@ -124,11 +126,12 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         }
 
         dispatch(handleGivenAnswers(chosenAnswersArray, givenAnswersArray[currentQuestion].id, givenAnswersArray))
-        // dispatch(setClickedAnswerActions.setClicked())
+      
     }
+    //======================================================
 
 
-    //===PREVIOUS QUESTION============================
+    //===PREVIOUS QUESTION==================================
 
     const handlePrev = () => {
         const nextQuestion = currentQuestion - 1;
@@ -140,7 +143,6 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         }
 
         dispatch(handleGivenAnswers(chosenAnswersArray, givenAnswersArray[currentQuestion].id, givenAnswersArray))
-
 
     }
     //=======================================================
@@ -167,10 +169,25 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         setFinalScore(trueAnswers)
         console.log(`Your score is: ${trueAnswers}/${generatedQuizz.length}`)
 
+        const percent = (trueAnswers / generatedQuizz.length) * 100
+        console.log(percent);
+
+        let gradeWon = ""
+
+        if(percent < 66) {gradeWon = "F"}
+        else if(percent > 66 && percent <= 74) {gradeWon = "D"}
+        else if(percent > 74 && percent <= 84) {gradeWon = "C"}
+        else if(percent > 84 && percent <= 92) {gradeWon = "B"}
+        else {gradeWon = "A"}
+        
+
+        console.log(gradeWon);
+
         setData({
                     quizz_name: generatedQuizz[0].category,
                     difficulty: generatedQuizz[0].difficulty,
-                    score: `${trueAnswers} /${generatedQuizz.length}` 
+                    score: `${trueAnswers} /${generatedQuizz.length}`,
+                    grade: gradeWon 
                 })
 
         setShowScore(true)
@@ -186,7 +203,8 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
         dispatch(newAnswersActions.saveNewAnswers({
             quizz_name: data.quizz_name,
             difficulty: data.difficulty,
-            score: data.score
+            score: data.score,
+            grade: data.grade
         }))
         
         console.log('GIVEN ANSWERS SAVED INTO REDUX!!!');
@@ -197,7 +215,7 @@ export const GenerateQuizzButton = ({category, difficulty, ammount}) => {
     return (
         <Grid container justifyContent="center">
             <Grid item marginTop="20px">
-                <Button className={classes.button} variant='contained' onClick={handleGenerate}>generate quizz</Button>
+                <Button className={classes.button} variant='contained' onClick={handleGenerate}>generate new quizz</Button>
             </Grid>
                 {!showScore ? generatedQuizz.length > 0 &&
                 <Grid className={classes.quizz_container} container justifyContent="center" display="flex" flexDirection="column">

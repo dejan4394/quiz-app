@@ -3,7 +3,6 @@ import { MongoClient } from 'mongodb';
 import jwt_decode from "jwt-decode"
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

@@ -31,7 +31,7 @@ export const deleteQuiz = ({token, quizId}) => {
                     }))
                     setTimeout(()=>{
                       dispatch(serverResponseActions.setChanged())},
-                       1000)
+                       500)
 
                     })
                     

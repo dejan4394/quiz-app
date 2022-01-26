@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     }
   });
 
-export default function CardComponent({token, category, score, id}) {
+export default function CardComponent({token, category, score, id, grade}) {
 
   const dispatch = useDispatch()
 
@@ -67,7 +67,7 @@ export default function CardComponent({token, category, score, id}) {
           {score}
         </Typography>
         <Typography variant="body2">
-          You are master!!!
+          Your grade is : {grade}
         </Typography>
       </CardContent>
       <CardActions>

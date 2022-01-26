@@ -47,7 +47,8 @@ const useStyles = makeStyles({
     alignContent: "flex-start",
     background: "gray",
     margin: "0px",
-    minHeight: "100vh"
+    minHeight: "100vh",
+    padding: "30px"
   },
   card_container: {
     marginTop: "20px",
@@ -77,7 +78,8 @@ const changed = useSelector( state => state.profile_data.changed )
 
         if(changed){
           dispatch(getUserData({token, setUserData, setResponseFromServer}))
-      }
+        }
+        
         dispatch(serverResponseActions.setChanged())
   }, [token, changed])
 
@@ -116,10 +118,10 @@ const changed = useSelector( state => state.profile_data.changed )
             <Button className={classes.button} variant='contained'>Get Started</Button>
           </Link>
           </Grid>:
-          <Grid className={classes.completed_quizes} container direction="row" wrap="wrap">
+          <Grid className={classes.completed_quizes} container spacing={2} direction="row" wrap="wrap">
                   {completed.length > 0 ? completed.map((item, idx)=>{
-                            return <Grid className={classes.card_container} key={idx} item display="flex" sm={6} xs={12} md={6}> 
-                                    <CardComponent token={token} category={item.quiz_name} score={item.score} id={idx}/>
+                            return <Grid item className={classes.card_container} key={idx} xs={12} md={8} lg={6} xl={6}> 
+                                    <CardComponent token={token} category={item.quiz_name} score={item.score} id={idx} grade={ item.grade }/>
                                   </Grid>
                         }) : 
                         <Grid item>
@@ -127,7 +129,7 @@ const changed = useSelector( state => state.profile_data.changed )
                           <Button className={classes.button} variant='contained'>Get Started</Button>
                         </Link>
                         </Grid>
-                        }
+                  }
           
           </Grid>
           }
