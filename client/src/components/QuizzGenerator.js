@@ -76,7 +76,7 @@ const QuizzGenerator = ({quizzData, token}) => {
     return (
         <Grid container display="flex" flexDirection="column" justifyContent="center">
             <Grid className={classes.heading} container justifyContent="center" paddingTop="40px">
-                <Typography variant='h5' color="white">SELECT CATEGORY, DIFFICULTY, NR OF QUESTIONS</Typography>
+                <Typography variant='h5' color="white">SELECT CATEGORY / DIFFICULTY / AMMOUNT OF QUESTIONS</Typography>
             </Grid>
             <Grid className={classes.container}>
                 <Grid item marginTop="20px">

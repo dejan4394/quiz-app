@@ -71,7 +71,7 @@ function App() {
               <Route exact path="/categories" element={!tokenStr ? <SignUp /> : <Categories token={tokenStr}/>}/>  
               <Route exact path="/login" element={<SignIn />}/>  
               <Route exact path="/signup" element={<SignUp />}/>  
-              <Route exact path="/profile" element={<Profile token={tokenStr}/>}/>  
+              <Route exact path="/profile" element={!tokenStr ? <SignUp /> : <Profile token={tokenStr}/>}/>  
               <Route exact path="/cards" element={<About />}/> 
             </Routes>  
   
